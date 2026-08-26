@@ -7,7 +7,6 @@
 <title>A Secret Mission 💕</title>
 
 <style>
-
 *{
   margin:0;
   padding:0;
@@ -19,85 +18,44 @@ body{
   font-family:Arial, sans-serif;
   color:white;
   background:
-    radial-gradient(circle at 50% 25%, rgba(139,30,110,.35), transparent 25%),
+    radial-gradient(circle at 50% 20%, rgba(139,30,110,.35), transparent 25%),
     radial-gradient(circle at 15% 50%, rgba(255,0,128,.18), transparent 25%),
     radial-gradient(circle at 90% 60%, rgba(120,30,255,.20), transparent 30%),
     #080510;
   overflow-x:hidden;
 }
 
-/* Background glow */
-
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at 10% 20%, #ff3d9a 1px, transparent 2px),
-    radial-gradient(circle at 80% 30%, #ff8ac5 1px, transparent 2px),
-    radial-gradient(circle at 30% 70%, #a855f7 1px, transparent 2px),
-    radial-gradient(circle at 70% 90%, #ff4fa3 1px, transparent 2px);
-  background-size:150px 170px;
-  opacity:.6;
-  pointer-events:none;
+.screen{
+  display:none;
+  min-height:100vh;
+  padding:25px 0 40px;
 }
 
-/* Top text */
+.screen.active{
+  display:block;
+}
+
+/* ---------- START SCREEN ---------- */
 
 .top-text{
   text-align:center;
-  padding-top:45px;
-  font-size:12px;
-  letter-spacing:7px;
+  padding-top:25px;
+  font-size:11px;
+  letter-spacing:4px;
   color:#ffd0e6;
 }
-
-.top-text span{
-  color:#ff65ad;
-  font-size:20px;
-  margin:0 10px;
-}
-
-/* Main card */
 
 .card{
   width:90%;
   max-width:460px;
-  margin:70px auto 50px;
+  margin:55px auto 30px;
   padding:45px 25px;
   text-align:center;
-
-  background:linear-gradient(
-    180deg,
-    rgba(62,8,48,.85),
-    rgba(13,7,25,.92)
-  );
-
+  background:linear-gradient(180deg,rgba(62,8,48,.85),rgba(13,7,25,.92));
   border:1px solid rgba(255,120,190,.7);
   border-radius:38px;
-
-  box-shadow:
-    0 0 30px rgba(255,0,130,.20),
-    inset 0 0 40px rgba(255,50,160,.05);
-
-  position:relative;
-  overflow:hidden;
+  box-shadow:0 0 30px rgba(255,0,130,.20);
 }
-
-.card::before{
-  content:"";
-  position:absolute;
-  width:250px;
-  height:250px;
-  border-radius:50%;
-  background:rgba(200,0,150,.16);
-  filter:blur(50px);
-  top:-120px;
-  left:50%;
-  transform:translateX(-50%);
-}
-
-/* Lock */
 
 .lock-box{
   width:95px;
@@ -107,55 +65,29 @@ body::before{
   display:flex;
   align-items:center;
   justify-content:center;
-
   font-size:48px;
-
   background:rgba(255,0,150,.08);
   border:2px solid #ff55ad;
-
-  box-shadow:
-    0 0 20px #ff2f9a,
-    0 0 50px rgba(255,0,160,.45);
-
-  animation:float 3s ease-in-out infinite;
-
-  position:relative;
-  z-index:2;
+  box-shadow:0 0 25px #ff2f9a;
 }
-
-@keyframes float{
-  50%{
-    transform:translateY(-10px);
-  }
-}
-
-/* Title */
 
 h1{
-  font-size:48px;
-  font-family:Georgia, serif;
+  font-size:46px;
+  font-family:Georgia,serif;
   font-weight:500;
-  margin-bottom:5px;
-  position:relative;
 }
 
 .mission-title{
   font-family:cursive;
-  font-size:52px;
+  font-size:50px;
   color:#ff5da8;
-  margin-bottom:30px;
-  text-shadow:0 0 20px rgba(255,60,160,.7);
+  margin-bottom:25px;
 }
-
-/* Divider */
 
 .divider{
   color:#ff79b8;
   margin-bottom:25px;
-  font-size:18px;
 }
-
-/* Description */
 
 .description{
   color:#ded4e1;
@@ -168,155 +100,235 @@ h1{
   color:#ff75b8;
 }
 
-/* Mission box */
-
 .mission-box{
   border:1px dashed rgba(255,90,170,.7);
   border-radius:25px;
   padding:28px 15px;
-  margin-bottom:40px;
-
+  margin-bottom:35px;
   background:rgba(40,10,45,.55);
 }
 
 .puzzle{
   font-size:42px;
-  margin-bottom:10px;
+  margin-bottom:8px;
 }
 
 .mission-box h2{
   color:#ff86c1;
-  margin-bottom:12px;
+  margin-bottom:10px;
 }
 
 .mission-box p{
-  color:#eee;
-  font-size:19px;
+  font-size:18px;
   line-height:1.6;
 }
 
-/* Button */
-
-.start-btn{
+.start-btn,.submit-btn{
   width:100%;
-  padding:21px;
+  padding:20px;
   border:none;
   border-radius:50px;
-
-  background:linear-gradient(
-    135deg,
-    #ff4f9d,
-    #d91969
-  );
-
+  background:linear-gradient(135deg,#ff4f9d,#d91969);
   color:white;
-  font-size:20px;
+  font-size:18px;
   font-weight:bold;
-  letter-spacing:1px;
-
   cursor:pointer;
-
-  box-shadow:
-    0 0 20px rgba(255,30,130,.7),
-    0 10px 40px rgba(180,0,90,.45);
-
-  transition:.3s;
+  box-shadow:0 0 20px rgba(255,30,130,.6);
 }
-
-.start-btn:active{
-  transform:scale(.96);
-}
-
-.start-btn:hover{
-  transform:translateY(-3px);
-  box-shadow:
-    0 0 35px rgba(255,40,150,.9),
-    0 15px 50px rgba(180,0,90,.6);
-}
-
-/* Bottom */
 
 .secret{
-  margin-top:35px;
+  margin-top:30px;
   color:#c9bfd1;
-  font-size:16px;
 }
 
 .ready{
   text-align:center;
-  margin-bottom:50px;
-  font-size:20px;
+  font-size:18px;
   color:#ddd;
 }
 
-.ready span{
-  color:#ff5ca8;
+/* ---------- QUESTION SCREEN ---------- */
+
+.question-wrap{
+  width:90%;
+  max-width:460px;
+  margin:60px auto;
+  text-align:center;
 }
 
+.level{
+  display:inline-block;
+  padding:8px 18px;
+  border:1px solid #ff5da8;
+  border-radius:30px;
+  color:#ff8bc3;
+  font-size:13px;
+  letter-spacing:2px;
+  margin-bottom:35px;
+}
+
+.question-card{
+  padding:38px 25px;
+  border-radius:32px;
+  background:linear-gradient(180deg,rgba(62,8,48,.85),rgba(13,7,25,.92));
+  border:1px solid rgba(255,120,190,.6);
+  box-shadow:0 0 35px rgba(255,0,130,.18);
+}
+
+.question-icon{
+  font-size:55px;
+  margin-bottom:20px;
+}
+
+.question-card h2{
+  font-size:28px;
+  line-height:1.4;
+  margin-bottom:30px;
+}
+
+.answer-input{
+  width:100%;
+  padding:18px;
+  border-radius:15px;
+  border:1px solid rgba(255,120,190,.5);
+  background:rgba(255,255,255,.07);
+  color:white;
+  font-size:17px;
+  outline:none;
+  margin-bottom:15px;
+  text-align:center;
+}
+
+.answer-input:focus{
+  border-color:#ff5da8;
+}
+
+.answer-input::placeholder{
+  color:#aaa;
+}
+
+.message{
+  min-height:25px;
+  margin-top:15px;
+  font-size:15px;
+  color:#ff8bc3;
+}
 </style>
 </head>
 
 <body>
 
-<div class="top-text">
-  <span>♡</span>
-  SOMETHING SPECIAL AWAITS YOU
-  <span>♡</span>
-</div>
+<!-- START SCREEN -->
+<div id="startScreen" class="screen active">
 
-<div class="card">
-
-  <div class="lock-box">
-    🔐
+  <div class="top-text">
+    ♡ SOMETHING SPECIAL AWAITS YOU ♡
   </div>
 
-  <h1>A Secret</h1>
+  <div class="card">
 
-  <div class="mission-title">
-    Mission
+    <div class="lock-box">🔐</div>
+
+    <h1>A Secret</h1>
+
+    <div class="mission-title">Mission</div>
+
+    <div class="divider">─── ♡ ───</div>
+
+    <div class="description">
+      Aaj kuch <b>ordinary</b> nahi hone wala...<br>
+      Lekin aagay barhne ke liye tumhein<br>
+      kuch <b>raaz</b> solve karne honge.
+    </div>
+
+    <div class="mission-box">
+      <div class="puzzle">🧩</div>
+      <h2>MISSION:</h2>
+      <p>Solve it together.<br>Unlock the secret.</p>
+    </div>
+
+    <button class="start-btn" onclick="startMission()">
+      START THE MISSION 🚀
+    </button>
+
+    <div class="secret">
+      🔐 The secret is waiting for you... ✨
+    </div>
+
   </div>
 
-  <div class="divider">
-    ─── ♡ ───
-  </div>
-
-  <div class="description">
-    Aaj kuch <b>ordinary</b> nahi hone wala...<br>
-    Lekin aagay barhne ke liye<br>
-    tumhein kuch <b>raaz</b> solve karne honge.
-  </div>
-
-  <div class="mission-box">
-
-    <div class="puzzle">🧩</div>
-
-    <h2>MISSION:</h2>
-
-    <p>
-      Solve it together.<br>
-      Unlock the secret.
-    </p>
-
-  </div>
-
-  <button class="start-btn" onclick="startMission()">
-    START THE MISSION 🚀
-  </button>
-
-  <div class="secret">
-    🔐 The secret is waiting for you... ✨
+  <div class="ready">
+    ✦ ─── Are you ready? 💕 ─── ✦
   </div>
 
 </div>
 
-<div class="ready">
-  ✦ ─── Are you ready? <span>💕</span> ─── ✦
+
+<!-- QUESTION 1 SCREEN -->
+<div id="questionScreen" class="screen">
+
+  <div class="question-wrap">
+
+    <div class="level">
+      LEVEL 1 • THE MAIN CHARACTER
+    </div>
+
+    <div class="question-card">
+
+      <div class="question-icon">👀</div>
+
+      <h2>
+        Aaj ki kahani ka<br>
+        main character kaun hai?
+      </h2>
+
+      <input
+        type="text"
+        id="answer"
+        class="answer-input"
+        placeholder="Apna jawab yahan likho..."
+      >
+
+      <button class="submit-btn" onclick="checkAnswer()">
+        CHECK ANSWER 🔍
+      </button>
+
+      <div id="message" class="message"></div>
+
+    </div>
+
+  </div>
+
 </div>
+
 
 <script>
 
 function startMission(){
-  alert("Mission started 😏🔥");
+  document.getElementById("startScreen").classList.remove("active");
+  document.getElementById("questionScreen").classList.add("active");
+}
+
+function checkAnswer(){
+
+  const answer = document.getElementById("answer").value
+    .trim()
+    .toLowerCase();
+
+  const correctAnswer = "eshal noor";
+
+  const message = document.getElementById("message");
+
+  if(answer === correctAnswer.toLowerCase()){
+
+    message.innerHTML = "✨ Bilkul sahi! Ab asli mission shuru hota hai...";
+
+  }else{
+
+    message.innerHTML = "😏 Hmm... dobara socho.";
+
+  }
+
 }
 
 </script>
