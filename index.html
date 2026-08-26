@@ -1455,15 +1455,17 @@ function startCountdown(){
       clearInterval(timer);
 
       document
-        .getElementById("countdownScreen")
-        .classList.remove("active");
+  .getElementById("birthdayScreen")
+  .classList.add("active");
 
-      document
-        .getElementById("birthdayScreen")
-        .classList.add("active");
+const music = document.getElementById("birthdayMusic");
 
-      startFlowers();
+music.volume = 0.8;
+music.play().catch(function(error){
+  console.log("Music could not start automatically.");
+});
 
+startFlowers();
     }
 
   },1000);
