@@ -733,17 +733,32 @@ function selectTile(index){
 
 function isSolved(){
 
-  for(let i = 0; i < correctOrder.length; i++){
+  function puzzleCompleted(){
 
-    if(puzzleOrder[i] !== correctOrder[i]){
-      return false;
-    }
+  document
+    .getElementById("successBox")
+    .style.display = "block";
 
-  }
-
-  return true;
+  document
+    .getElementById("nextLevelBtn")
+    .style.display = "block";
 
 }
+
+
+/* NEXT LEVEL */
+
+function nextLevel(){
+
+  document
+    .getElementById("puzzleScreen")
+    .classList.remove("active");
+
+  document
+    .getElementById("level3Screen")
+    .classList.add("active");
+
+      }
 
 
 /* =========================
