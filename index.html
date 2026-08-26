@@ -1,0 +1,139 @@
+```html id="gm6uxv"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Mystery 🎂</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at top, #24243e, #0f0c29 55%, #000);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .stars {
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(white 1px, transparent 1px),
+        radial-gradient(white 1px, transparent 1px);
+      background-size: 50px 50px, 80px 80px;
+      opacity: 0.25;
+      animation: moveStars 20s linear infinite;
+    }
+
+    @keyframes moveStars {
+      from { transform: translateY(0); }
+      to { transform: translateY(-100px); }
+    }
+
+    .card {
+      position: relative;
+      width: 90%;
+      max-width: 420px;
+      padding: 45px 25px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 28px;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 50px rgba(255,255,255,0.08);
+      z-index: 2;
+    }
+
+    .lock {
+      font-size: 65px;
+      margin-bottom: 20px;
+      animation: float 2s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      50% { transform: translateY(-10px); }
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+
+    .subtitle {
+      color: #cfcfe8;
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .mission {
+      background: rgba(255,255,255,0.08);
+      padding: 16px;
+      border-radius: 15px;
+      margin-bottom: 25px;
+    }
+
+    .start-btn {
+      width: 100%;
+      border: none;
+      padding: 16px;
+      border-radius: 15px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(135deg, #6a5cff, #a855f7);
+    }
+
+    .footer {
+      margin-top: 22px;
+      font-size: 12px;
+      color: #9999b8;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="stars"></div>
+
+  <div class="card">
+    <div class="lock">🔐</div>
+
+    <h1>A Secret Mission 👀</h1>
+
+    <p class="subtitle">
+      Aaj kuch ordinary nahi hone wala...<br>
+      Lekin aagay barhne ke liye tumhein kuch raaz solve karne honge.
+    </p>
+
+    <div class="mission">
+      🧩 <b>MISSION:</b><br>
+      Solve it together.<br>
+      Unlock the secret.
+    </div>
+
+    <button class="start-btn" onclick="startMission()">
+      START THE MISSION 🚀
+    </button>
+
+    <div class="footer">🔒 The secret is waiting...</div>
+  </div>
+
+  <script>
+    function startMission() {
+      alert("Mission started 😏");
+    }
+  </script>
+</body>
+</html>
+```
