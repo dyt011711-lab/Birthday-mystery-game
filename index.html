@@ -1336,6 +1336,26 @@ function showHint5(){
   }
 
 }
+/* =========================
+   LEVEL 5 - FINAL RIDDLE
+========================= */
+
+function showHint5(){
+
+  const hint =
+    document.getElementById("hintText5");
+
+  if(hint.style.display === "block"){
+
+    hint.style.display = "none";
+
+  }else{
+
+    hint.style.display = "block";
+
+  }
+
+}
 
 
 function checkLevel5(){
@@ -1359,12 +1379,19 @@ function checkLevel5(){
   if(correctAnswers.includes(answer)){
 
     message.innerHTML =
-      "🔓 Correct... tumne final riddle solve kar li! ✨";
+      "🔓 Correct... tumne final riddle solve kar li!";
 
     setTimeout(function(){
-      message.innerHTML =
-        "🎁 Ab tumhara final surprise unlock ho raha hai...";
-    },1200);
+
+      document
+        .getElementById("level5Screen")
+        .classList.remove("active");
+
+      document
+        .getElementById("finalCongratsScreen")
+        .classList.add("active");
+
+    },1000);
 
   }else{
 
@@ -1374,6 +1401,124 @@ function checkLevel5(){
   }
 
 }
+
+
+/* =========================
+   FINAL COUNTDOWN
+========================= */
+
+function startCountdown(){
+
+  document
+    .getElementById("finalCongratsScreen")
+    .classList.remove("active");
+
+  document
+    .getElementById("countdownScreen")
+    .classList.add("active");
+
+  const number =
+    document.getElementById("countdownNumber");
+
+  let count = 3;
+
+  number.innerHTML = count;
+
+  const timer = setInterval(function(){
+
+    count--;
+
+    if(count > 0){
+
+      number.innerHTML = count;
+
+      number.style.animation = "none";
+
+      setTimeout(function(){
+        number.style.animation = "countPop .8s ease";
+      },20);
+
+    }else{
+
+      clearInterval(timer);
+
+      document
+        .getElementById("countdownScreen")
+        .classList.remove("active");
+
+      document
+        .getElementById("birthdayScreen")
+        .classList.add("active");
+
+      startFlowers();
+
+    }
+
+  },1000);
+
+}
+
+
+/* =========================
+   OPEN PERSONAL LETTER
+========================= */
+
+function openLetter(){
+
+  document
+    .getElementById("letterBox")
+    .classList.toggle("open");
+
+}
+
+
+/* =========================
+   FLOWER RAIN
+========================= */
+
+function startFlowers(){
+
+  const birthdayScreen =
+    document.getElementById("birthdayScreen");
+
+  const flowers = [
+    "🌸",
+    "🌷",
+    "🌹",
+    "💮",
+    "🪻"
+  ];
+
+  setInterval(function(){
+
+    const flower =
+      document.createElement("div");
+
+    flower.className = "flower";
+
+    flower.innerHTML =
+      flowers[Math.floor(
+        Math.random() * flowers.length
+      )];
+
+    flower.style.left =
+      Math.random() * 100 + "%";
+
+    flower.style.fontSize =
+      (20 + Math.random() * 25) + "px";
+
+    flower.style.animationDuration =
+      (4 + Math.random() * 4) + "s";
+
+    birthdayScreen.appendChild(flower);
+
+    setTimeout(function(){
+      flower.remove();
+    },9000);
+
+  },450);
+
+  }
 
 
 </script>
