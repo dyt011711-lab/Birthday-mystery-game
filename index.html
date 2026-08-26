@@ -900,7 +900,9 @@ function showHint(){
   }
 
 }
-
+/* =========================
+   LEVEL 4 - MEMORY CHECK
+========================= */
 
 function checkLevel4(){
 
@@ -914,7 +916,6 @@ function checkLevel4(){
     document.getElementById("level4Message");
 
   const correctAnswers = [
-
     "memory",
     "memorry",
     "memorries",
@@ -922,13 +923,24 @@ function checkLevel4(){
     "yadien",
     "yadein",
     "yaden"
-
   ];
 
   if(correctAnswers.includes(answer)){
 
     message.innerHTML =
       "✨ Bilkul sahi... kuch memories waqt ke saath aur bhi special ho jati hain. 💕";
+
+    setTimeout(function(){
+
+      document
+        .getElementById("level4Screen")
+        .classList.remove("active");
+
+      document
+        .getElementById("level5Screen")
+        .classList.add("active");
+
+    },1200);
 
   }else{
 
@@ -938,6 +950,64 @@ function checkLevel4(){
   }
 
 }
+
+
+/* =========================
+   LEVEL 5 - FINAL RIDDLE
+========================= */
+
+function showHint5(){
+
+  const hint =
+    document.getElementById("hintText5");
+
+  if(hint.style.display === "block"){
+    hint.style.display = "none";
+  }else{
+    hint.style.display = "block";
+  }
+
+}
+
+
+function checkLevel5(){
+
+  const answer = document
+    .getElementById("level5Answer")
+    .value
+    .trim()
+    .toLowerCase();
+
+  const message =
+    document.getElementById("level5Message");
+
+  const correctAnswers = [
+    "connection",
+    "bond",
+    "relationship",
+    "connection with someone"
+  ];
+
+  if(correctAnswers.includes(answer)){
+
+    message.innerHTML =
+      "🔓 Correct... tumne final riddle solve kar li! ✨";
+
+    setTimeout(function(){
+      message.innerHTML =
+        "🎁 Ab tumhara final surprise unlock ho raha hai...";
+    },1200);
+
+  }else{
+
+    message.innerHTML =
+      "😏 Nahi... thora aur gehra socho.";
+
+  }
+
+}
+
+
 </script>
 
 </body>
