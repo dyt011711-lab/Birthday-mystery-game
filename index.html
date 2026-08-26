@@ -342,6 +342,260 @@ h1{
   border:2px solid #ff55ad;
   box-shadow:0 0 25px #ff2f9a;
 }
+  /* =========================
+   FINAL CINEMATIC SCREENS
+========================= */
+
+.final-screen{
+  display:none;
+  min-height:100vh;
+  width:100%;
+  padding:25px 20px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.final-screen.active{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+/* BLACK CINEMATIC SCREEN */
+
+.black-theme{
+  background:#000;
+  color:white;
+}
+
+.big-heart{
+  font-size:100px;
+  animation:heartBeat 1s infinite alternate;
+  filter:drop-shadow(0 0 25px #ff2f92);
+  margin-bottom:25px;
+}
+
+@keyframes heartBeat{
+
+  from{
+    transform:scale(.9);
+  }
+
+  to{
+    transform:scale(1.15);
+  }
+
+}
+
+.congrats-title{
+  font-family:Georgia,serif;
+  font-size:38px;
+  line-height:1.25;
+  margin-bottom:25px;
+  animation:fadeUp 1s ease;
+}
+
+.congrats-title span{
+  color:#ff5da8;
+}
+
+.final-text{
+  max-width:500px;
+  color:#e2dce5;
+  line-height:1.8;
+  font-size:17px;
+  margin-bottom:30px;
+}
+
+.final-text b{
+  color:#ff78b9;
+}
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(25px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+
+/* ENVELOPE BUTTON */
+
+.envelope-btn{
+  border:none;
+  background:transparent;
+  cursor:pointer;
+  animation:floatEnvelope 2s infinite ease-in-out;
+}
+
+.envelope-icon{
+  font-size:70px;
+  filter:drop-shadow(0 0 18px rgba(255,70,160,.7));
+}
+
+.envelope-label{
+  display:block;
+  color:#ff85c2;
+  margin-top:12px;
+  font-size:15px;
+  letter-spacing:1px;
+}
+
+@keyframes floatEnvelope{
+
+  0%,100%{
+    transform:translateY(0);
+  }
+
+  50%{
+    transform:translateY(-12px);
+  }
+
+}
+
+
+/* COUNTDOWN */
+
+.countdown-number{
+  font-size:120px;
+  font-family:Georgia,serif;
+  font-weight:bold;
+  animation:countPop .8s ease;
+  text-shadow:0 0 30px #ff3f9c;
+}
+
+@keyframes countPop{
+
+  from{
+    transform:scale(.3);
+    opacity:0;
+  }
+
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+
+}
+
+
+/* BIRTHDAY CELEBRATION */
+
+.birthday-theme{
+  background:
+    radial-gradient(circle at top, #ffb3d9, transparent 30%),
+    radial-gradient(circle at bottom, #ffc1df, transparent 35%),
+    linear-gradient(135deg,#ff4f9d,#7d245d);
+  color:white;
+}
+
+.birthday-content{
+  position:relative;
+  z-index:2;
+  max-width:520px;
+  animation:fadeUp 1s ease;
+}
+
+.birthday-title{
+  font-family:Georgia,serif;
+  font-size:43px;
+  line-height:1.15;
+  text-shadow:0 3px 15px rgba(0,0,0,.25);
+  margin-bottom:20px;
+}
+
+.eshu-name{
+  display:block;
+  font-family:cursive;
+  font-size:65px;
+  margin-top:8px;
+  text-shadow:0 0 20px rgba(255,255,255,.8);
+}
+
+.birthday-message{
+  font-size:17px;
+  line-height:1.9;
+  margin:25px 0 30px;
+}
+
+.personal-btn{
+  padding:17px 25px;
+  border:none;
+  border-radius:50px;
+  background:white;
+  color:#c4216c;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 8px 25px rgba(0,0,0,.2);
+}
+
+
+/* PERSONAL LETTER */
+
+.letter-box{
+  display:none;
+  width:100%;
+  max-width:460px;
+  margin-top:25px;
+  padding:25px;
+  border-radius:25px;
+  background:rgba(255,255,255,.94);
+  color:#5d2140;
+  box-shadow:0 10px 35px rgba(0,0,0,.25);
+  text-align:left;
+  animation:fadeUp .7s ease;
+}
+
+.letter-box.open{
+  display:block;
+}
+
+.letter-header{
+  text-align:center;
+  font-size:28px;
+  margin-bottom:20px;
+}
+
+.personal-message{
+  line-height:1.8;
+  font-size:16px;
+  white-space:pre-line;
+}
+
+
+/* FLOWERS */
+
+.flower{
+  position:absolute;
+  top:-60px;
+  z-index:1;
+  animation:fall linear forwards;
+  pointer-events:none;
+}
+
+@keyframes fall{
+
+  from{
+    transform:translateY(-60px) rotate(0deg);
+    opacity:1;
+  }
+
+  to{
+    transform:translateY(110vh) rotate(360deg);
+    opacity:.7;
+  }
+
+  }
 </style>
 </head>
 
