@@ -696,7 +696,41 @@ function puzzleCompleted(){
 /* NEXT LEVEL */
 
 function nextLevel(){
-  alert("😎 Next mystery ab unlock hogi!");
+
+  document
+    .getElementById("puzzleScreen")
+    .classList.remove("active");
+
+  document
+    .getElementById("level3Screen")
+    .classList.add("active");
+
+}
+
+
+function checkLevel3(button,result){
+
+  const message =
+    document.getElementById("level3Message");
+
+  if(result === "correct"){
+
+    button.classList.add("correct");
+
+    message.innerHTML =
+      "👑 Bilkul sahi! Aaj ki asli Birthday Queen kaun hai, ye to obvious tha 😏✨";
+
+  }else{
+
+    button.classList.add("wrong");
+
+    message.innerHTML =
+      "😏 Nahi nahi... thora aur socho.";
+
+  }
+
+}
+  
 }
 
 </script>
