@@ -707,28 +707,37 @@ function nextLevel(){
 }
 
 
-function checkLevel3(button, result){
+function checkLevel3(){
+
+  const answer = document
+    .getElementById("level3Answer")
+    .value
+    .trim()
+    .toLowerCase();
 
   const message =
     document.getElementById("level3Message");
 
-  if(result === "correct"){
-
-    button.classList.add("correct");
+  if(answer === "birthday queen"){
 
     message.innerHTML =
-      "👑 Bilkul sahi! Aaj ki asli Birthday Queen kaun hai, ye to obvious tha 😏✨";
+      "👑 Bilkul sahi! Birthday Queen ne agla raaz unlock kar diya 😏✨";
+
+    setTimeout(function(){
+
+      message.innerHTML =
+        "🔐 Agla mystery unlock ho raha hai...";
+
+    }, 1500);
 
   }else{
 
-    button.classList.add("wrong");
-
     message.innerHTML =
-      "😏 Nahi nahi... thora aur socho.";
+      "😏 Hmm... emojis ko dobara dhyan se dekho.";
 
   }
 
-}
+  }
 </script>
 
 </body>
