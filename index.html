@@ -1418,7 +1418,6 @@ function checkLevel5(){
 /* =========================
    FINAL COUNTDOWN
 ========================= */
-
 function startCountdown(){
 
   document
@@ -1455,22 +1454,33 @@ function startCountdown(){
       clearInterval(timer);
 
       document
-  .getElementById("birthdayScreen")
-  .classList.add("active");
+        .getElementById("countdownScreen")
+        .classList.remove("active");
 
-const music = document.getElementById("birthdayMusic");
+      document
+        .getElementById("birthdayScreen")
+        .classList.add("active");
 
-music.volume = 0.8;
-music.play().catch(function(error){
-  console.log("Music could not start automatically.");
-});
+      /* MUSIC AB START HOGI */
+      const music =
+        document.getElementById("birthdayMusic");
 
-startFlowers();
+      music.volume = 0.8;
+      music.currentTime = 0;
+
+      music.play().catch(function(error){
+        console.log("Music error:", error);
+      });
+
+      startFlowers();
+
     }
 
   },1000);
 
-}
+                 }
+
+      
 
 
 /* =========================
