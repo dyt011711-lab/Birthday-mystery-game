@@ -22,64 +22,67 @@ body{
     radial-gradient(circle at 15% 50%, rgba(255,0,128,.18), transparent 25%),
     radial-gradient(circle at 90% 60%, rgba(120,30,255,.20), transparent 30%),
     #080510;
-  overflow-x:hidden;
 }
 
 .screen{
   display:none;
   min-height:100vh;
-  padding:25px 0 40px;
+  padding:25px 0 50px;
 }
 
 .screen.active{
   display:block;
 }
 
-/* ---------- START SCREEN ---------- */
+/* START SCREEN */
 
 .top-text{
   text-align:center;
-  padding-top:25px;
+  padding-top:20px;
   font-size:11px;
-  letter-spacing:4px;
+  letter-spacing:3px;
   color:#ffd0e6;
 }
 
 .card{
   width:90%;
   max-width:460px;
-  margin:55px auto 30px;
-  padding:45px 25px;
+  margin:45px auto 30px;
+  padding:40px 25px;
   text-align:center;
-  background:linear-gradient(180deg,rgba(62,8,48,.85),rgba(13,7,25,.92));
+  background:linear-gradient(
+    180deg,
+    rgba(62,8,48,.85),
+    rgba(13,7,25,.92)
+  );
   border:1px solid rgba(255,120,190,.7);
   border-radius:38px;
   box-shadow:0 0 30px rgba(255,0,130,.20);
 }
 
 .lock-box{
-  width:95px;
-  height:95px;
-  margin:0 auto 30px;
+  width:90px;
+  height:90px;
+  margin:0 auto 25px;
   border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:48px;
+  font-size:45px;
   background:rgba(255,0,150,.08);
   border:2px solid #ff55ad;
   box-shadow:0 0 25px #ff2f9a;
 }
 
 h1{
-  font-size:46px;
+  font-size:44px;
   font-family:Georgia,serif;
   font-weight:500;
 }
 
 .mission-title{
   font-family:cursive;
-  font-size:50px;
+  font-size:48px;
   color:#ff5da8;
   margin-bottom:25px;
 }
@@ -91,9 +94,9 @@ h1{
 
 .description{
   color:#ded4e1;
-  font-size:18px;
+  font-size:17px;
   line-height:1.8;
-  margin-bottom:35px;
+  margin-bottom:30px;
 }
 
 .description b{
@@ -103,13 +106,13 @@ h1{
 .mission-box{
   border:1px dashed rgba(255,90,170,.7);
   border-radius:25px;
-  padding:28px 15px;
-  margin-bottom:35px;
+  padding:25px 15px;
+  margin-bottom:30px;
   background:rgba(40,10,45,.55);
 }
 
-.puzzle{
-  font-size:42px;
+.puzzle-icon{
+  font-size:40px;
   margin-bottom:8px;
 }
 
@@ -119,40 +122,43 @@ h1{
 }
 
 .mission-box p{
-  font-size:18px;
+  font-size:17px;
   line-height:1.6;
 }
 
-.start-btn,.submit-btn{
+.start-btn,
+.submit-btn,
+.next-btn{
   width:100%;
-  padding:20px;
+  padding:18px;
   border:none;
   border-radius:50px;
   background:linear-gradient(135deg,#ff4f9d,#d91969);
   color:white;
-  font-size:18px;
+  font-size:17px;
   font-weight:bold;
   cursor:pointer;
   box-shadow:0 0 20px rgba(255,30,130,.6);
 }
 
 .secret{
-  margin-top:30px;
+  margin-top:25px;
   color:#c9bfd1;
 }
 
 .ready{
   text-align:center;
-  font-size:18px;
+  font-size:17px;
   color:#ddd;
 }
 
-/* ---------- QUESTION SCREEN ---------- */
+/* QUESTION SCREEN */
 
-.question-wrap{
+.question-wrap,
+.puzzle-wrap{
   width:90%;
   max-width:460px;
-  margin:60px auto;
+  margin:45px auto;
   text-align:center;
 }
 
@@ -162,38 +168,44 @@ h1{
   border:1px solid #ff5da8;
   border-radius:30px;
   color:#ff8bc3;
-  font-size:13px;
-  letter-spacing:2px;
-  margin-bottom:35px;
+  font-size:12px;
+  letter-spacing:1.5px;
+  margin-bottom:25px;
 }
 
-.question-card{
-  padding:38px 25px;
+.question-card,
+.puzzle-card{
+  padding:32px 22px;
   border-radius:32px;
-  background:linear-gradient(180deg,rgba(62,8,48,.85),rgba(13,7,25,.92));
+  background:linear-gradient(
+    180deg,
+    rgba(62,8,48,.85),
+    rgba(13,7,25,.92)
+  );
   border:1px solid rgba(255,120,190,.6);
   box-shadow:0 0 35px rgba(255,0,130,.18);
 }
 
 .question-icon{
-  font-size:55px;
-  margin-bottom:20px;
+  font-size:52px;
+  margin-bottom:18px;
 }
 
-.question-card h2{
-  font-size:28px;
+.question-card h2,
+.puzzle-card h2{
+  font-size:26px;
   line-height:1.4;
-  margin-bottom:30px;
+  margin-bottom:25px;
 }
 
 .answer-input{
   width:100%;
-  padding:18px;
+  padding:17px;
   border-radius:15px;
   border:1px solid rgba(255,120,190,.5);
   background:rgba(255,255,255,.07);
   color:white;
-  font-size:17px;
+  font-size:16px;
   outline:none;
   margin-bottom:15px;
   text-align:center;
@@ -210,15 +222,72 @@ h1{
 .message{
   min-height:25px;
   margin-top:15px;
-  font-size:15px;
   color:#ff8bc3;
 }
+
+/* PHOTO PUZZLE - 4 x 4 */
+
+.puzzle-info{
+  color:#ddd;
+  font-size:15px;
+  line-height:1.6;
+  margin-bottom:20px;
+}
+
+#puzzleBoard{
+  width:100%;
+  aspect-ratio:1 / 1;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:3px;
+  border-radius:18px;
+  overflow:hidden;
+  background:#000;
+  margin-bottom:20px;
+}
+
+.tile{
+  cursor:pointer;
+  background-image:url("puzzle.jpg");
+  background-repeat:no-repeat;
+  background-size:400% 400%;
+  border:2px solid transparent;
+  transition:0.2s;
+}
+
+.tile.selected{
+  border:3px solid #ff5da8;
+  transform:scale(.94);
+}
+
+.success-box{
+  display:none;
+  margin-top:20px;
+  padding:20px;
+  border-radius:20px;
+  background:rgba(255,50,140,.12);
+  border:1px solid #ff5da8;
+  color:#fff;
+}
+
+.success-box h3{
+  color:#ff86c1;
+  margin-bottom:8px;
+  font-size:22px;
+}
+
+#nextLevelBtn{
+  display:none;
+  margin-top:18px;
+}
+
 </style>
 </head>
 
 <body>
 
 <!-- START SCREEN -->
+
 <div id="startScreen" class="screen active">
 
   <div class="top-text">
@@ -231,9 +300,13 @@ h1{
 
     <h1>A Secret</h1>
 
-    <div class="mission-title">Mission</div>
+    <div class="mission-title">
+      Mission
+    </div>
 
-    <div class="divider">─── ♡ ───</div>
+    <div class="divider">
+      ─── ♡ ───
+    </div>
 
     <div class="description">
       Aaj kuch <b>ordinary</b> nahi hone wala...<br>
@@ -242,9 +315,14 @@ h1{
     </div>
 
     <div class="mission-box">
-      <div class="puzzle">🧩</div>
+      <div class="puzzle-icon">🧩</div>
+
       <h2>MISSION:</h2>
-      <p>Solve it together.<br>Unlock the secret.</p>
+
+      <p>
+        Solve it together.<br>
+        Unlock the secret.
+      </p>
     </div>
 
     <button class="start-btn" onclick="startMission()">
@@ -264,7 +342,8 @@ h1{
 </div>
 
 
-<!-- QUESTION 1 SCREEN -->
+<!-- LEVEL 1 -->
+
 <div id="questionScreen" class="screen">
 
   <div class="question-wrap">
@@ -302,16 +381,66 @@ h1{
 </div>
 
 
+<!-- LEVEL 2 PHOTO PUZZLE -->
+
+<div id="puzzleScreen" class="screen">
+
+  <div class="puzzle-wrap">
+
+    <div class="level">
+      LEVEL 2 • PIECES OF THE MEMORY
+    </div>
+
+    <div class="puzzle-card">
+
+      <div class="question-icon">🧩</div>
+
+      <h2>Picture ko complete karo 👀</h2>
+
+      <p class="puzzle-info">
+        Do pieces ko tap karo aur unki position swap karo.<br>
+        Tasveer complete hote hi agla raaz unlock hoga.
+      </p>
+
+      <div id="puzzleBoard"></div>
+
+      <div id="successBox" class="success-box">
+        <h3>❤️ Teamwork Check: PASSED!</h3>
+        <p>Tumne memory ko dobara complete kar diya... ✨</p>
+      </div>
+
+      <button
+        id="nextLevelBtn"
+        class="next-btn"
+        onclick="nextLevel()"
+      >
+        NEXT MYSTERY 🔐
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
 <script>
+
+/* START MISSION */
 
 function startMission(){
   document.getElementById("startScreen").classList.remove("active");
   document.getElementById("questionScreen").classList.add("active");
 }
 
+
+/* LEVEL 1 */
+
 function checkAnswer(){
 
-  const answer = document.getElementById("answer").value
+  const answer = document
+    .getElementById("answer")
+    .value
     .trim()
     .toLowerCase();
 
@@ -319,16 +448,189 @@ function checkAnswer(){
 
   const message = document.getElementById("message");
 
-  if(answer === correctAnswer.toLowerCase()){
+  if(answer === correctAnswer){
 
-    message.innerHTML = "✨ Bilkul sahi! Ab asli mission shuru hota hai...";
+    message.innerHTML =
+      "✨ Bilkul sahi! Ab agla raaz tumhara intezar kar raha hai...";
+
+    setTimeout(function(){
+
+      document
+        .getElementById("questionScreen")
+        .classList.remove("active");
+
+      document
+        .getElementById("puzzleScreen")
+        .classList.add("active");
+
+      createPuzzle();
+
+    },1500);
 
   }else{
 
-    message.innerHTML = "😏 Hmm... dobara socho.";
+    message.innerHTML =
+      "😏 Hmm... dobara socho.";
 
   }
 
+}
+
+
+/* PHOTO PUZZLE - 4 x 4 */
+
+const correctOrder = [
+  0,1,2,3,
+  4,5,6,7,
+  8,9,10,11,
+  12,13,14,15
+];
+
+let puzzleOrder = [];
+let selectedTile = null;
+
+
+function createPuzzle(){
+
+  const board = document.getElementById("puzzleBoard");
+
+  board.innerHTML = "";
+
+  puzzleOrder = [
+    0,1,2,3,
+    4,5,6,7,
+    8,9,10,11,
+    12,13,14,15
+  ];
+
+  do{
+    shuffle(puzzleOrder);
+  }while(isSolved());
+
+  selectedTile = null;
+
+  document.getElementById("successBox").style.display = "none";
+  document.getElementById("nextLevelBtn").style.display = "none";
+
+  renderPuzzle();
+}
+
+
+function shuffle(array){
+
+  for(let i = array.length - 1; i > 0; i--){
+
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [array[i],array[j]] =
+      [array[j],array[i]];
+
+  }
+
+}
+
+
+function renderPuzzle(){
+
+  const board = document.getElementById("puzzleBoard");
+
+  board.innerHTML = "";
+
+  puzzleOrder.forEach(function(piece,index){
+
+    const tile = document.createElement("div");
+
+    tile.className = "tile";
+
+    const row = Math.floor(piece / 4);
+    const col = piece % 4;
+
+    tile.style.backgroundPosition =
+      (col * 33.3333) + "% " +
+      (row * 33.3333) + "%";
+
+    tile.dataset.index = index;
+
+    tile.onclick = function(){
+      selectTile(index);
+    };
+
+    board.appendChild(tile);
+
+  });
+
+}
+
+
+function selectTile(index){
+
+  const tiles = document.querySelectorAll(".tile");
+
+  if(selectedTile === null){
+
+    selectedTile = index;
+
+    tiles[index].classList.add("selected");
+
+  }else if(selectedTile === index){
+
+    tiles[index].classList.remove("selected");
+
+    selectedTile = null;
+
+  }else{
+
+    const temp = puzzleOrder[selectedTile];
+
+    puzzleOrder[selectedTile] = puzzleOrder[index];
+
+    puzzleOrder[index] = temp;
+
+    selectedTile = null;
+
+    renderPuzzle();
+
+    if(isSolved()){
+      puzzleCompleted();
+    }
+
+  }
+
+}
+
+
+function isSolved(){
+
+  for(let i = 0; i < correctOrder.length; i++){
+
+    if(puzzleOrder[i] !== correctOrder[i]){
+      return false;
+    }
+
+  }
+
+  return true;
+
+}
+
+
+function puzzleCompleted(){
+
+  document
+    .getElementById("successBox")
+    .style.display = "block";
+
+  document
+    .getElementById("nextLevelBtn")
+    .style.display = "block";
+
+}
+
+
+/* NEXT LEVEL */
+
+function nextLevel(){
+  alert("😎 Next mystery ab unlock hogi!");
 }
 
 </script>
