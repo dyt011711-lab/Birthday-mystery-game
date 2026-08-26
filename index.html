@@ -733,6 +733,18 @@ function selectTile(index){
 
 function isSolved(){
 
+  for(let i = 0; i < correctOrder.length; i++){
+
+    if(puzzleOrder[i] !== correctOrder[i]){
+      return false;
+    }
+
+  }
+
+  return true;
+
+}
+      
   function puzzleCompleted(){
 
   document
