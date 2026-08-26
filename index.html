@@ -746,33 +746,9 @@ function isSolved(){
 }
 
 
-function puzzleCompleted(){
-
-  document
-    .getElementById("successBox")
-    .style.display = "block";
-
-  document
-    .getElementById("nextLevelBtn")
-    .style.display = "block";
-
-}
-
-
-/* NEXT LEVEL */
-
-function nextLevel(){
-
-  document
-    .getElementById("puzzleScreen")
-    .classList.remove("active");
-
-  document
-    .getElementById("level3Screen")
-    .classList.add("active");
-
-}
-
+/* =========================
+   LEVEL 3 - EMOJI MYSTERY
+========================= */
 
 function checkLevel3(){
 
@@ -792,10 +768,15 @@ function checkLevel3(){
 
     setTimeout(function(){
 
-      message.innerHTML =
-        "🔐 Agla mystery unlock ho raha hai...";
+      document
+        .getElementById("level3Screen")
+        .classList.remove("active");
 
-    }, 1500);
+      document
+        .getElementById("level4Screen")
+        .classList.add("active");
+
+    }, 1200);
 
   }else{
 
@@ -804,7 +785,67 @@ function checkLevel3(){
 
   }
 
+}
+
+
+/* =========================
+   LEVEL 4 - MEMORY CHECK
+========================= */
+
+function showHint(){
+
+  const hint =
+    document.getElementById("hintText");
+
+  if(hint.style.display === "block"){
+
+    hint.style.display = "none";
+
+  }else{
+
+    hint.style.display = "block";
+
   }
+
+}
+
+
+function checkLevel4(){
+
+  const answer = document
+    .getElementById("level4Answer")
+    .value
+    .trim()
+    .toLowerCase();
+
+  const message =
+    document.getElementById("level4Message");
+
+  const correctAnswers = [
+
+    "memory",
+    "memorry",
+    "memorries",
+    "memories",
+    "yadien",
+    "yadein",
+    "yaden"
+
+  ];
+
+  if(correctAnswers.includes(answer)){
+
+    message.innerHTML =
+      "✨ Bilkul sahi... kuch memories waqt ke saath aur bhi special ho jati hain. 💕";
+
+  }else{
+
+    message.innerHTML =
+      "😏 Thora aur socho... jawab tumhare bohat qareeb hai.";
+
+  }
+
+}
 </script>
 
 </body>
