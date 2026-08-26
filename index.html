@@ -470,16 +470,15 @@ h1{
         🎂 + 👑 + 🎉
       </p>
 
-      <button class="option-btn" onclick="checkLevel3(this,'wrong')">
-        A) Happy New Year 🎆
-      </button>
+      <input
+        type="text"
+        id="level3Answer"
+        class="answer-input"
+        placeholder="Apna jawab yahan likho..."
+      >
 
-      <button class="option-btn" onclick="checkLevel3(this,'correct')">
-        B) Birthday Queen 👑
-      </button>
-
-      <button class="option-btn" onclick="checkLevel3(this,'wrong')">
-        C) Party Time 🎊
+      <button class="submit-btn" onclick="checkLevel3()">
+        CHECK ANSWER 🔍
       </button>
 
       <div id="level3Message" class="message"></div>
