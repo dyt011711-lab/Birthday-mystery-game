@@ -1829,39 +1829,60 @@ function startFlowers(){
 /* =========================
    SPECIAL LOVE SCREEN
 ========================= */
-function openLoveScreen(){
+ function openLoveScreen(){
 
   /* Notification hide */
-
   document
     .getElementById("specialNotification")
     .style.display = "none";
 
 
-  /* BIRTHDAY MUSIC STOP */
-
-  const music =
+  /* Birthday music stop */
+  const birthdayMusic =
     document.getElementById("birthdayMusic");
 
-  music.pause();
+  if(birthdayMusic){
 
-  music.currentTime = 0;
+    birthdayMusic.pause();
+    birthdayMusic.currentTime = 0;
+
+  }
 
 
   /* Love screen show */
-
   document
     .getElementById("loveScreen")
     .classList.add("active");
 
 
-  /* Start falling I love you */
+  /* Sprinkle sound — ONLY ONCE */
+  const sprinkleSound =
+    document.getElementById("sprinkleSound");
 
+  sprinkleSound.volume = 0.35;
+  sprinkleSound.currentTime = 0;
+
+  sprinkleSound.play().catch(function(error){
+    console.log("Sprinkle sound error:", error);
+  });
+
+
+  /* Romantic music starts */
+  const loveMusic =
+    document.getElementById("loveMusic");
+
+  loveMusic.volume = 0.55;
+  loveMusic.currentTime = 0;
+
+  loveMusic.play().catch(function(error){
+    console.log("Love music error:", error);
+  });
+
+
+  /* Start falling I Love You text */
   setInterval(createLoveText, 350);
 
 }
-
-
 function createLoveText(){
 
   const container =
