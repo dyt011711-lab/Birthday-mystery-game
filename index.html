@@ -1794,7 +1794,97 @@ function startFlowers(){
   },450);
 
   }
+/* =========================
+   SPECIAL LOVE SCREEN
+========================= */
 
+
+function showSpecialNotification(){
+
+  document
+    .getElementById("specialNotification")
+    .style.display = "block";
+
+}
+
+
+function openLoveScreen(){
+
+  /* Notification hide */
+
+  document
+    .getElementById("specialNotification")
+    .style.display = "none";
+
+
+  /* Love screen show */
+
+  document
+    .getElementById("loveScreen")
+    .classList.add("active");
+
+
+  /* Start falling I love you */
+
+  setInterval(createLoveText, 350);
+
+}
+
+
+function createLoveText(){
+
+  const container =
+    document.getElementById("loveRain");
+
+
+  const text =
+    document.createElement("div");
+
+
+  text.className = "loveText";
+
+
+  const messages = [
+
+    "I love you ❤️",
+    "I Love You 💕",
+    "Love you forever ❤️",
+    "I love you 🌹",
+    "Always yours 💗"
+
+  ];
+
+
+  text.innerHTML =
+    messages[
+      Math.floor(
+        Math.random() * messages.length
+      )
+    ];
+
+
+  text.style.left =
+    Math.random() * 85 + "%";
+
+
+  text.style.fontSize =
+    14 + Math.random() * 12 + "px";
+
+
+  text.style.animationDuration =
+    4 + Math.random() * 3 + "s";
+
+
+  container.appendChild(text);
+
+
+  setTimeout(function(){
+
+    text.remove();
+
+  },7000);
+
+}
 
 </script>
 
