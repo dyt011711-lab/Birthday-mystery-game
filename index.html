@@ -596,6 +596,235 @@ h1{
   }
 
   }
+  /* =========================
+   SPECIAL NOTIFICATION
+========================= */
+
+#specialNotification{
+
+  display:none;
+
+  position:fixed;
+
+  top:18px;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  z-index:9999;
+
+  background:rgba(255,255,255,0.12);
+
+  border:1px solid rgba(255,120,190,0.7);
+
+  color:#fff;
+
+  padding:12px 20px;
+
+  border-radius:30px;
+
+  font-size:14px;
+
+  text-align:center;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 0 15px rgba(255,70,160,0.35);
+
+  animation:specialPulse 1.4s ease-in-out infinite;
+
+}
+
+
+@keyframes specialPulse{
+
+  0%{
+    transform:translateX(-50%) scale(1);
+    opacity:0.8;
+  }
+
+  50%{
+    transform:translateX(-50%) scale(1.06);
+    opacity:1;
+  }
+
+  100%{
+    transform:translateX(-50%) scale(1);
+    opacity:0.8;
+  }
+
+}
+
+
+
+/* =========================
+   LOVE SCREEN
+========================= */
+
+#loveScreen{
+
+  background:#050005;
+
+  overflow:hidden;
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:10000;
+
+}
+
+
+#loveScreen.active{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+}
+
+
+#loveRain{
+
+  position:absolute;
+
+  width:100%;
+  height:100%;
+
+  top:0;
+  left:0;
+
+  overflow:hidden;
+
+  pointer-events:none;
+
+}
+
+
+.loveText{
+
+  position:absolute;
+
+  top:-60px;
+
+  color:#ff75ad;
+
+  white-space:nowrap;
+
+  font-family:serif;
+
+  text-shadow:
+    0 0 8px rgba(255,70,160,0.8);
+
+  animation:loveFall linear forwards;
+
+}
+
+
+@keyframes loveFall{
+
+  0%{
+
+    transform:translateY(0) rotate(-8deg);
+
+    opacity:0;
+
+  }
+
+  10%{
+
+    opacity:1;
+
+  }
+
+  100%{
+
+    transform:translateY(115vh) rotate(8deg);
+
+    opacity:0;
+
+  }
+
+}
+
+
+
+/* CENTER LOVE TEXT */
+
+.loveCenter{
+
+  position:relative;
+
+  z-index:2;
+
+  text-align:center;
+
+  padding:20px;
+
+}
+
+
+.smallHeart{
+
+  font-size:35px;
+
+  margin-bottom:10px;
+
+  animation:heartBeat 1.2s ease-in-out infinite;
+
+}
+
+
+.loveCenter h1{
+
+  margin:0;
+
+  font-family:cursive;
+
+  font-size:52px;
+
+  color:#ff5c9f;
+
+  text-shadow:
+    0 0 10px #ff5c9f,
+    0 0 25px #ff247c,
+    0 0 45px rgba(255,30,120,0.7);
+
+}
+
+
+.loveCenter p{
+
+  margin-top:18px;
+
+  font-size:22px;
+
+  color:#ffd1e3;
+
+  text-shadow:0 0 12px rgba(255,100,170,0.8);
+
+}
+
+
+@keyframes heartBeat{
+
+  0%,100%{
+
+    transform:scale(1);
+
+  }
+
+  50%{
+
+    transform:scale(1.15);
+
+  }
+
+  }
 </style>
 </head>
 
