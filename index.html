@@ -1749,10 +1749,25 @@ function startCountdown(){
 
 function openLetter(){
 
+  const letterBox =
+    document.getElementById("letterBox");
+
+  const notification =
+    document.getElementById("specialNotification");
+
+  letterBox.classList.add("open");
+
+  notification.style.display = "block";
+  notification.style.visibility = "visible";
+  notification.style.opacity = "1";
+
+};
+function showSpecialNotification(){
+
   document
-    .getElementById("letterBox")
-    .classList.toggle("open");
-showSpecialNotification();
+    .getElementById("specialNotification")
+    .style.display = "block";
+  
 }
 
 
