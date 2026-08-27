@@ -1806,17 +1806,6 @@ function startFlowers(){
 /* =========================
    SPECIAL LOVE SCREEN
 ========================= */
-
-
-function showSpecialNotification(){
-
-  document
-    .getElementById("specialNotification")
-    .style.display = "block";
-
-}
-
-
 function openLoveScreen(){
 
   /* Notification hide */
@@ -1824,6 +1813,16 @@ function openLoveScreen(){
   document
     .getElementById("specialNotification")
     .style.display = "none";
+
+
+  /* BIRTHDAY MUSIC STOP */
+
+  const music =
+    document.getElementById("birthdayMusic");
+
+  music.pause();
+
+  music.currentTime = 0;
 
 
   /* Love screen show */
