@@ -839,10 +839,38 @@ opacity:1;
 </head>
 
 <body>
+<div id="roomScreen" class="screen active">
 
+  <div class="roomBox">
+
+    <div class="roomEmoji">🎮💕</div>
+
+    <h1>Birthday Mission</h1>
+
+    <p>
+      Welcome! Pehle secret room join karo
+      aur phir mission dono mil kar complete karo 😏✨
+    </p>
+
+    <input
+      type="text"
+      id="roomCode"
+      placeholder="Enter Secret Code"
+      autocomplete="off"
+    >
+
+    <button onclick="joinBirthdayRoom()">
+      Join Mission 💕
+    </button>
+
+    <p id="roomMessage"></p>
+
+  </div>
+
+</div>
 <!-- START SCREEN -->
 
-<div id="startScreen" class="screen active">
+<div id="startScreen" class="screen">
 
   <div class="top-text">
     ♡ SOMETHING SPECIAL AWAITS YOU ♡
