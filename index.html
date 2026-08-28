@@ -1132,52 +1132,79 @@ opacity:1;
   </div>
 
 </div>
-<!-- GLOBAL MULTIPLAYER CHAT -->
 
-<div id="multiplayerPanel" class="multiplayer-panel">
+<!-- FLOATING MULTIPLAYER CHAT -->
+
+<button
+  id="chatToggle"
+  class="chat-toggle"
+  onclick="toggleChat()">
+  💬
+</button>
+
+
+<div
+  id="multiplayerPanel"
+  class="multiplayer-panel chat-closed">
+
+  <div class="chat-header">
+
+    <span>💬 Team Chat</span>
+
+    <button
+      class="chat-close"
+      onclick="toggleChat()">
+      ✕
+    </button>
+
+  </div>
+
 
   <div class="players-status">
+
     <span class="online-dot"></span>
+
     <span id="playersStatus">
       Waiting for partner...
     </span>
+
   </div>
+
 
   <div id="playersList" class="players-list">
     👤 You
   </div>
 
-  <div class="live-chat">
 
-    <div class="chat-title">
-      💬 Team Chat
-    </div>
+  <div
+    id="chatMessages"
+    class="chat-messages">
 
-    <div id="chatMessages" class="chat-messages">
-      <div class="system-message">
-        ✨ Chat is ready...
-      </div>
-    </div>
-
-    <div class="chat-input-box">
-
-      <input
-        type="text"
-        id="chatInput"
-        placeholder="Type something..."
-        autocomplete="off"
-      >
-
-      <button
-        class="chat-send-btn"
-        onclick="sendChatMessage()"
-      >
-        ➤
-      </button>
-
+    <div class="system-message">
+      ✨ Chat is ready...
     </div>
 
   </div>
+
+
+  <div class="chat-input-box">
+
+    <input
+      type="text"
+      id="chatInput"
+      placeholder="Type something..."
+      autocomplete="off"
+    >
+
+    <button
+      class="chat-send-btn"
+      onclick="sendChatMessage()">
+      ➤
+    </button>
+
+  </div>
+
+</div>
 
 </div>
 
