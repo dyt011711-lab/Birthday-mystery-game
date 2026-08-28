@@ -1384,6 +1384,7 @@ ky ap mery sath ho or birthday celebrate kar rhi ho to or kya hosakta hai mery l
 /* START MISSION */
 
 function startMission(){
+  saveGameProgress(1);
   document.getElementById("startScreen").classList.remove("active");
   document.getElementById("questionScreen").classList.add("active");
 }
@@ -1404,7 +1405,7 @@ function checkAnswer(){
   const message = document.getElementById("message");
 
   if(answer === correctAnswer){
-
+saveGameProgress(2);
     message.innerHTML =
       "✨ Bilkul sahi! Ab agla raaz tumhara intezar kar raha hai...";
 
@@ -1569,7 +1570,7 @@ function isSolved(){
 }
       
   function puzzleCompleted(){
-
+saveGameProgress(3);
   document
     .getElementById("successBox")
     .style.display = "block";
@@ -1612,7 +1613,7 @@ function checkLevel3(){
     document.getElementById("level3Message");
 
   if(answer === "birthday queen"){
-
+saveGameProgress(4);
     message.innerHTML =
       "👑 Bilkul sahi! Birthday Queen ne agla raaz unlock kar diya 😏✨";
 
@@ -1684,7 +1685,7 @@ function checkLevel4(){
   ];
 
   if(correctAnswers.includes(answer)){
-
+saveGameProgress(5);
     message.innerHTML =
       "✨ Bilkul sahi... kuch memories waqt ke saath aur bhi special ho jati hain. 💕";
 
@@ -1767,7 +1768,7 @@ function checkLevel5(){
   ];
 
   if(correctAnswers.includes(answer)){
-
+saveGameProgress(6);
     message.innerHTML =
       "🔓 Correct... tumne final riddle solve kar li!";
 
@@ -2095,7 +2096,181 @@ const database = getDatabase(firebaseApp);
 ========================= */
 
 const SECRET_ROOM = "motu143moti";
+/* =========================
+   SHARED GAME PROGRESS
+========================= */
 
+const progressRef = ref(
+  database,
+  "rooms/" + SECRET_ROOM + "/progress"
+);
+
+
+window.saveGameProgress = async function(stage){
+
+  await set(progressRef, {
+    stage: stage,
+    updatedAt: Date.now()
+  });
+
+};
+
+
+let lastSyncedStage = 0;
+
+
+onValue(progressRef, function(snapshot){
+
+  const data = snapshot.val();
+
+  if(!data) return;
+
+  const stage = data.stage || 0;
+
+  if(stage <= lastSyncedStage) return;
+
+  lastSyncedStage = stage;
+
+  console.log(
+    "Multiplayer stage received:",
+    stage
+  );
+
+
+  /* Hide all normal game screens first */
+
+  const screens = [
+    "startScreen",
+    "questionScreen",
+    "puzzleScreen",
+    "level3Screen",
+    "level4Screen",
+    "level5Screen",
+    "finalcongratsscreen",
+    "birthdayScreen",
+    "loveScreen"
+  ];
+
+  screens.forEach(function(id){
+
+    const screen = document.getElementById(id);
+
+    if(screen){
+      screen.classList.remove("active");
+    }
+
+  });
+
+
+  /* =========================
+     LEVEL 1
+  ========================= */
+
+  if(stage === 1){
+
+    document
+      .getElementById("questionScreen")
+      .classList.add("active");
+
+  }
+
+
+  /* =========================
+     LEVEL 2 - PHOTO PUZZLE
+  ========================= */
+
+  if(stage === 2){
+
+    document
+      .getElementById("puzzleScreen")
+      .classList.add("active");
+
+  }
+
+
+  /* =========================
+     LEVEL 3 - EMOJI
+  ========================= */
+
+  if(stage === 3){
+
+    document
+      .getElementById("level3Screen")
+      .classList.add("active");
+
+  }
+
+
+  /* =========================
+     LEVEL 4 - MEMORY
+  ========================= */
+
+  if(stage === 4){
+
+    document
+      .getElementById("level4Screen")
+      .classList.add("active");
+
+  }
+
+
+  /* =========================
+     LEVEL 5 - FINAL RIDDLE
+  ========================= */
+
+  if(stage === 5){
+
+    document
+      .getElementById("level5Screen")
+      .classList.add("active");
+
+  }
+
+
+  /* =========================
+     FINAL CONGRATULATIONS
+  ========================= */
+
+  if(stage === 6){
+
+    const finalScreen =
+      document.getElementById("finalCongratsScreen")
+    if(finalScreen){
+      finalScreen.classList.add("active");
+    }
+
+  }
+
+
+  /* =========================
+     BIRTHDAY SCREEN
+  ========================= */
+
+  if(stage === 7){
+
+    const finalCongratsScreen =
+  document.getElementById("finalCongratsScreen");
+
+if(finalCongratsScreen){
+  finalCongratsScreen.classList.add("active");
+}
+
+  /* =========================
+     LOVE SCREEN
+  ========================= */
+
+  if(stage === 8){
+
+    const loveScreen =
+      document.getElementById("loveScreen");
+
+    if(loveScreen){
+      loveScreen.classList.add("active");
+    }
+
+  }
+
+});
 
 let playerId = localStorage.getItem("birthdayPlayerId");
 
