@@ -2096,7 +2096,24 @@ const database = getDatabase(firebaseApp);
 ========================= */
 
 const SECRET_ROOM = "motu143moti";
+let playerId = localStorage.getItem("birthdayPlayerId");
 
+if(!playerId){
+
+  playerId =
+    "player_" +
+    Date.now() +
+    "_" +
+    Math.random()
+      .toString(36)
+      .substring(2,8);
+
+  localStorage.setItem(
+    "birthdayPlayerId",
+    playerId
+  );
+
+}
 /* =========================
    SHARED GAME PROGRESS
 ========================= */
@@ -2378,24 +2395,7 @@ window.startProgressSync = function(){
     }
 
   });
-let playerId = localStorage.getItem("birthdayPlayerId");
 
-if(!playerId){
-
-  playerId =
-    "player_" +
-    Date.now() +
-    "_" +
-    Math.random()
-      .toString(36)
-      .substring(2,8);
-
-  localStorage.setItem(
-    "birthdayPlayerId",
-    playerId
-  );
-
-}
 };
 
 
