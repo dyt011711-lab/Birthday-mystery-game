@@ -835,6 +835,88 @@ opacity:1;
   }
 
   }
+  /* =========================
+   MULTIPLAYER ROOM SCREEN
+========================= */
+
+#roomScreen{
+  background: radial-gradient(circle at top, #2b0a2b, #050005);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+#roomScreen.active{
+  display: flex;
+}
+
+.roomBox{
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  padding: 35px 25px;
+  border-radius: 28px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,120,180,0.35);
+  box-shadow: 0 0 35px rgba(255,60,150,0.25);
+  backdrop-filter: blur(12px);
+}
+
+.roomEmoji{
+  font-size: 55px;
+  margin-bottom: 15px;
+  animation: roomPulse 1.8s ease-in-out infinite;
+}
+
+.roomBox h1{
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.roomBox p{
+  color: #f4c7da;
+  line-height: 1.6;
+}
+
+#roomCode{
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 22px;
+  padding: 16px;
+  border-radius: 15px;
+  border: 1px solid #ff7bac;
+  outline: none;
+  text-align: center;
+  font-size: 18px;
+}
+
+.roomBox button{
+  width: 100%;
+  margin-top: 14px;
+  padding: 15px;
+  border: none;
+  border-radius: 15px;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+#roomMessage{
+  min-height: 24px;
+  margin-top: 15px;
+  color: #ffb3d1;
+}
+
+@keyframes roomPulse{
+  0%,100%{
+    transform: scale(1);
+  }
+
+  50%{
+    transform: scale(1.08);
+  }
+}
 </style>
 </head>
 
