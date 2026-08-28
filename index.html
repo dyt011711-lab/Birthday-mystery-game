@@ -2289,6 +2289,106 @@ if(!playerId){
   );
 
 }
+  /* =========================
+   LIVE CHAT
+========================= */
+
+const chatRef = ref(
+  database,
+  "rooms/" + SECRET_ROOM + "/chat"
+);
+
+
+/* SEND MESSAGE */
+
+window.sendChatMessage = async function(){
+
+  const input =
+    document.getElementById("chatInput");
+
+  const text =
+    input.value.trim();
+
+  if(!text) return;
+
+
+  try{
+
+    await push(chatRef, {
+
+      sender: playerId,
+
+      message: text,
+
+      time: Date.now()
+
+    });
+
+    input.value = "";
+
+  }catch(error){
+
+    console.error(
+      "Chat error:",
+      error
+    );
+
+  }
+
+};
+
+
+/* RECEIVE MESSAGES */
+
+onChildAdded(chatRef, function(snapshot){
+
+  const data =
+    snapshot.val();
+
+  if(!data) return;
+
+
+  const messages =
+    document.getElementById("chatMessages");
+
+  if(!messages) return;
+
+
+  const messageBox =
+    document.createElement("div");
+
+
+  messageBox.style.padding = "7px 10px";
+  messageBox.style.borderRadius = "10px";
+  messageBox.style.fontSize = "13px";
+
+
+  if(data.sender === playerId){
+
+    messageBox.style.alignSelf = "flex-end";
+    messageBox.style.background = "#222";
+    messageBox.style.color = "white";
+
+  }else{
+
+    messageBox.style.alignSelf = "flex-start";
+    messageBox.style.background = "#eeeeee";
+    messageBox.style.color = "#222";
+
+  }
+
+
+  messageBox.innerHTML =
+    data.message;
+
+
+  messages.appendChild(messageBox);
+
+
+  messages.scrollTop =
+    messages.scrollHeight;
+
+});
 
 /* =========================
    SHARED GAME PROGRESS
