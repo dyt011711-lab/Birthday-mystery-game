@@ -2051,34 +2051,182 @@ function createLoveText(){
 </script>
 
 <script type="module">
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-  import { getDatabase } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
-  const firebaseConfig = {
 
-    apiKey: "AIzaSyC2UTWJcBF4xBG2vVBxQ8eEzTq7tE2zsZg",
+import {
+  getDatabase,
+  ref,
+  set,
+  onValue
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
 
-    authDomain: "eshu-birthday-mission.firebaseapp.com",
 
-    databaseURL:
-    "https://eshu-birthday-mission-default-rtdb.firebaseio.com",
+const firebaseConfig = {
 
-    projectId: "eshu-birthday-mission",
+  apiKey: "AIzaSyC2UTWJcBF4xBG2vVBxQ8eEzTq7tE2zsZg",
 
-    storageBucket:
-    "eshu-birthday-mission.firebasestorage.app",
+  authDomain: "eshu-birthday-mission.firebaseapp.com",
 
-    messagingSenderId:
-    "666795585586",
+  databaseURL:
+  "https://eshu-birthday-mission-default-rtdb.firebaseio.com",
 
-    appId:
-    "1:666795585586:web:f58d360bab8f911a200c2b"
+  projectId: "eshu-birthday-mission",
 
-  };
+  storageBucket:
+  "eshu-birthday-mission.firebasestorage.app",
+
+  messagingSenderId:
+  "666795585586",
+
+  appId:
+  "1:666795585586:web:f58d360bab8f911a200c2b"
+
+};
+
 
 const firebaseApp = initializeApp(firebaseConfig);
 
 const database = getDatabase(firebaseApp);
-  
+
+
+/* =========================
+   MULTIPLAYER ROOM
+========================= */
+
+const SECRET_ROOM = "motu143moti";
+
+
+let playerId = localStorage.getItem("birthdayPlayerId");
+
+if(!playerId){
+
+  playerId =
+    "player_" +
+    Date.now() +
+    "_" +
+    Math.random()
+      .toString(36)
+      .substring(2,8);
+
+  localStorage.setItem(
+    "birthdayPlayerId",
+    playerId
+  );
+
+}
+
+
+window.joinBirthdayRoom = async function(){
+
+  const input =
+    document.getElementById("roomCode");
+
+  const message =
+    document.getElementById("roomMessage");
+
+  const enteredCode =
+    input.value
+      .trim()
+      .toLowerCase();
+
+
+  if(enteredCode !== SECRET_ROOM){
+
+    message.innerHTML =
+      "❌ Wrong secret code 😏 Try again!";
+
+    return;
+
+  }
+
+
+  message.innerHTML =
+    "✨ Joining Birthday Mission...";
+
+
+  const playerRef =
+    ref(
+      database,
+      "rooms/" +
+      SECRET_ROOM +
+      "/players/" +
+      playerId
+    );
+
+
+  try{
+
+    await set(playerRef, {
+
+      joined: true,
+
+      joinedAt: Date.now()
+
+    });
+
+
+    message.innerHTML =
+      "💕 Room joined successfully!";
+
+
+    setTimeout(function(){
+
+      document
+        .getElementById("roomScreen")
+        .classList
+        .remove("active");
+
+
+      document
+        .getElementById("startScreen")
+        .classList
+        .add("active");
+
+
+    },800);
+
+
+  }catch(error){
+
+    console.error(error);
+
+    message.innerHTML =
+      "❌ Connection error. Try again.";
+
+  }
+
+};
+
+
+/* =========================
+   ROOM PLAYERS CHECK
+========================= */
+
+const playersRef =
+  ref(
+    database,
+    "rooms/" +
+    SECRET_ROOM +
+    "/players"
+  );
+
+
+onValue(playersRef, function(snapshot){
+
+  const players =
+    snapshot.val() || {};
+
+  const playerCount =
+    Object.keys(players).length;
+
+  console.log(
+    "Players in room:",
+    playerCount
+  );
+
+});
+
 </script>
 
   
