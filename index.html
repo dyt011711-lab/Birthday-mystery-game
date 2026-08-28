@@ -1940,5 +1940,37 @@ function createLoveText(){
 
 </script>
 
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+  import { getDatabase } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+  const firebaseConfig = {
+
+    apiKey: "AIzaSyC2UTWJcBF4xBG2vVBxQ8eEzTq7tE2zsZg",
+
+    authDomain: "eshu-birthday-mission.firebaseapp.com",
+
+    databaseURL:
+    "https://eshu-birthday-mission-default-rtdb.firebaseio.com",
+
+    projectId: "eshu-birthday-mission",
+
+    storageBucket:
+    "eshu-birthday-mission.firebasestorage.app",
+
+    messagingSenderId:
+    "666795585586",
+
+    appId:
+    "1:666795585586:web:f58d360bab8f911a200c2b"
+
+  };
+
+const firebaseApp = initializeApp(firebaseConfig);
+
+const database = getDatabase(firebaseApp);
+  
+</script>
+
+  
 </body>
 </html>
