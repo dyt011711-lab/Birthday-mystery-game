@@ -2114,6 +2114,7 @@ if(!playerId){
   );
 
 }
+
 /* =========================
    SHARED GAME PROGRESS
 ========================= */
@@ -2124,29 +2125,40 @@ const progressRef = ref(
 );
 
 
-/* Apni progress save karo */
+/* Multiplayer sync variables */
+
+let multiplayerReady = false;
+let lastSyncedStage = 0;
+let firstProgressLoad = true;
+
+
+/* Apni progress Firebase mein save karo */
 
 window.saveGameProgress = async function(stage){
 
-  await set(progressRef, {
-    stage: stage,
-    updatedAt: Date.now(),
-    sender: playerId || "unknown"
-  });
+  try{
+
+    await set(progressRef, {
+
+      stage: stage,
+      updatedAt: Date.now(),
+      sender: playerId
+
+    });
+
+  }catch(error){
+
+    console.error(
+      "Progress save error:",
+      error
+    );
+
+  }
 
 };
 
 
-/* Listener tab tak start nahi hoga
-   jab tak player room join na kare */
-
-let multiplayerReady = false;
-
-let lastSyncedStage = 0;
-
-
-/* Room join hone ke baad hi
-   doosre player ki progress sunenge */
+/* Doosre player ki progress sync */
 
 window.startProgressSync = function(){
 
@@ -2165,8 +2177,18 @@ window.startProgressSync = function(){
     const stage = data.stage || 0;
 
 
-    /* Apni hi progress ko dobara
-       process mat karo */
+    /* Pehli dafa purani saved progress ignore */
+    if(firstProgressLoad){
+
+      firstProgressLoad = false;
+      lastSyncedStage = stage;
+
+      return;
+
+    }
+
+
+    /* Apni hi progress ko dobara run mat karo */
 
     if(data.sender === playerId){
 
@@ -2177,7 +2199,7 @@ window.startProgressSync = function(){
     }
 
 
-    /* Purani ya same progress ignore */
+    /* Same ya purani progress ignore */
 
     if(stage <= lastSyncedStage) return;
 
@@ -2317,7 +2339,12 @@ window.startProgressSync = function(){
         music.currentTime = 0;
 
         music.play().catch(function(error){
-          console.log("Music error:", error);
+
+          console.log(
+            "Music error:",
+            error
+          );
+
         });
 
       }
@@ -2363,10 +2390,12 @@ window.startProgressSync = function(){
         sprinkleSound.currentTime = 0;
 
         sprinkleSound.play().catch(function(error){
+
           console.log(
             "Sprinkle sound error:",
             error
           );
+
         });
 
       }
@@ -2381,22 +2410,28 @@ window.startProgressSync = function(){
         loveMusic.currentTime = 0;
 
         loveMusic.play().catch(function(error){
+
           console.log(
             "Love music error:",
             error
           );
+
         });
 
       }
 
-
-      setInterval(createLoveText, 350);
+      setInterval(
+        createLoveText,
+        350
+      );
 
     }
 
   });
 
 };
+
+    
 
 
 
