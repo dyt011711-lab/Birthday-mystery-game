@@ -2227,48 +2227,110 @@ onValue(progressRef, function(snapshot){
   }
 
 
-  /* =========================
-     FINAL CONGRATULATIONS
-  ========================= */
+/* =========================
+   FINAL CONGRATULATIONS
+========================= */
 
-  if(stage === 6){
+if(stage === 6){
 
-    const finalScreen =
-      document.getElementById("finalCongratsScreen")
-    if(finalScreen){
-      finalScreen.classList.add("active");
-    }
+  const finalCongratsScreen =
+    document.getElementById("finalCongratsScreen");
 
+  if(finalCongratsScreen){
+    finalCongratsScreen.classList.add("active");
   }
 
-
-  /* =========================
-     BIRTHDAY SCREEN
-  ========================= */
-
-  if(stage === 7){
-
-    const finalCongratsScreen =
-  document.getElementById("finalCongratsScreen");
-
-if(finalCongratsScreen){
-  finalCongratsScreen.classList.add("active");
 }
 
-  /* =========================
-     LOVE SCREEN
-  ========================= */
 
-  if(stage === 8){
+/* =========================
+   BIRTHDAY SCREEN
+========================= */
 
-    const loveScreen =
-      document.getElementById("loveScreen");
+if(stage === 7){
 
-    if(loveScreen){
-      loveScreen.classList.add("active");
+  const birthdayScreen =
+    document.getElementById("birthdayScreen");
+
+  if(birthdayScreen){
+
+    birthdayScreen.classList.add("active");
+
+    const music =
+      document.getElementById("birthdayMusic");
+
+    if(music){
+
+      music.volume = 0.8;
+
+      music.play().catch(function(error){
+        console.log("Music error:", error);
+      });
+
     }
 
+    startFlowers();
+
   }
+
+}
+
+
+/* =========================
+   LOVE SCREEN
+========================= */
+
+if(stage === 8){
+
+  const birthdayMusic =
+    document.getElementById("birthdayMusic");
+
+  if(birthdayMusic){
+    birthdayMusic.pause();
+    birthdayMusic.currentTime = 0;
+  }
+
+
+  const loveScreen =
+    document.getElementById("loveScreen");
+
+  if(loveScreen){
+
+    loveScreen.classList.add("active");
+
+  }
+
+  const sprinkleSound =
+    document.getElementById("sprinkleSound");
+
+  if(sprinkleSound){
+
+    sprinkleSound.volume = 0.35;
+    sprinkleSound.currentTime = 0;
+
+    sprinkleSound.play().catch(function(error){
+      console.log("Sprinkle sound error:", error);
+    });
+
+  }
+
+
+  const loveMusic =
+    document.getElementById("loveMusic");
+
+  if(loveMusic){
+
+    loveMusic.volume = 0.55;
+
+    loveMusic.play().catch(function(error){
+      console.log("Love music error:", error);
+    });
+
+  }
+
+  setInterval(createLoveText, 350);
+
+}
 
 });
 
