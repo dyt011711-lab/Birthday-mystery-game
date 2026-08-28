@@ -2415,6 +2415,34 @@ onChildAdded(chatRef, function(snapshot){
     messages.scrollHeight;
 
 });
+  /* =========================
+   CHAT OPEN / CLOSE
+========================= */
+
+window.toggleChat = function(){
+
+  const panel =
+    document.getElementById("multiplayerPanel");
+
+  const button =
+    document.getElementById("chatToggle");
+
+
+  if(panel.classList.contains("chat-closed")){
+
+    panel.classList.remove("chat-closed");
+
+    button.style.display = "none";
+
+  }else{
+
+    panel.classList.add("chat-closed");
+
+    button.style.display = "block";
+
+  }
+
+};
 
 /* =========================
    SHARED GAME PROGRESS
