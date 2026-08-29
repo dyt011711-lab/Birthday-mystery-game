@@ -2506,15 +2506,22 @@ window.startProgressSync = function(){
     const stage = data.stage || 0;
 
 
-    /* Pehli dafa purani saved progress ignore */
-    if(firstProgressLoad){
+    /* Pehli Firebase reading ko save karo,
+   lekin agar doosra player already game start kar chuka
+   ho to uski current progress bhi apply karo */
 
-      firstProgressLoad = false;
-      lastSyncedStage = stage;
+if(firstProgressLoad){
 
-      return;
+  firstProgressLoad = false;
 
-    }
+  if(data.sender === playerId){
+    lastSyncedStage = stage;
+    return;
+  }
+
+  lastSyncedStage = 0;
+
+}
 
 
     /* Apni hi progress ko dobara run mat karo */
