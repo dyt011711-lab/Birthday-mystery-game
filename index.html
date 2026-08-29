@@ -2346,7 +2346,9 @@ window.sendChatMessage = async function(){
 
       message: text,
 
-      time: Date.now()
+      time: Date.now(),
+
+      session: "current"
 
     });
 
@@ -2364,7 +2366,7 @@ window.sendChatMessage = async function(){
 };
 
 
-/* RECEIVE MESSAGES */
+/* RECEIVE ONLY NEW MESSAGES */
 
 onChildAdded(chatRef, function(snapshot){
 
@@ -2378,6 +2380,11 @@ onChildAdded(chatRef, function(snapshot){
     document.getElementById("chatMessages");
 
   if(!messages) return;
+
+
+  /* Ignore old messages */
+
+  if(!data.session) return;
 
 
   const messageBox =
