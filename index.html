@@ -2547,17 +2547,21 @@ window.startProgressSync = function(){
 
     if(stage === 1){
 
-      document
-        .getElementById("startScreen")
-        .classList.remove("active");
+  const startScreen =
+    document.getElementById("startScreen");
 
-      document
-        .getElementById("questionScreen")
-        .classList.add("active");
+  const questionScreen =
+    document.getElementById("questionScreen");
+
+  if(startScreen){
+    startScreen.classList.remove("active");
+  }
+
+  if(questionScreen){
+    questionScreen.classList.add("active");
+  }
 
     }
-
-
     /* =========================
        LEVEL 2
     ========================= */
