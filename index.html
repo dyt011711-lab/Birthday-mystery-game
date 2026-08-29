@@ -2349,7 +2349,7 @@ window.sendChatMessage = async function(){
 
       time: Date.now(),
 
-      session: chatSessionId"
+      session: "current"
 
     });
 
@@ -2386,8 +2386,7 @@ onChildAdded(chatRef, function(snapshot){
   /* Ignore old messages */
 
   
-if(data.session !== chatSessionId) return;
-
+if(!data.session) return;
   const messageBox =
     document.createElement("div");
 
