@@ -2315,29 +2315,7 @@ if(!playerId){
   );
 
 }
-  /* =========================
-   CHAT SESSION
-========================= */
 
-let chatSessionId =
-  sessionStorage.getItem("birthdayChatSessionId");
-
-if(!chatSessionId){
-
-  chatSessionId =
-    "chat_" +
-    Date.now() +
-    "_" +
-    Math.random()
-      .toString(36)
-      .substring(2,8);
-
-  sessionStorage.setItem(
-    "birthdayChatSessionId",
-    chatSessionId
-  );
-
-}
   /* =========================
    LIVE CHAT
 ========================= */
