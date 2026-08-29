@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>A Secret Mission 💕</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  min-height:100vh;
+  font-family:Arial, sans-serif;
+  color:white;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(139,30,110,.35), transparent 25%),
+    radial-gradient(circle at 15% 50%, rgba(255,0,128,.18), transparent 25%),
+    radial-gradient(circle at 90% 60%, rgba(120,30,255,.20), transparent 30%),
+    #080510;
+}
+
+.screen{
+  display:none;
+  min-height:100vh;
+  padding:25px 0 50px;
+}
+
+.screen.active{
+  display:block;
+}
+
+/* START SCREEN */
+
+.top-text{
+  text-align:center;
+  padding-top:20px;
+  font-size:11px;
+  letter-spacing:3px;
+  color:#ffd0e6;
+}
+
+.card{
+  width:90%;
+  max-width:460px;
+  margin:45px auto 30px;
+  padding:40px 25px;
+  text-align:center;
+  background:linear-gradient(
+    180deg,
+    rgba(62,8,48,.85),
+    rgba(13,7,25,.92)
+  );
+  border:1px solid rgba(255,120,190,.7);
+  border-radius:38px;
+  box-shadow:0 0 30px rgba(255,0,130,.20);
+}
+
+.lock-box{
+  width:90px;
+  height:90px;
+  margin:0 auto 25px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:45px;
+  background:rgba(255,0,150,.08);
+  border:2px solid #ff55ad;
+  box-shadow:0 0 25px #ff2f9a;
+}
+
+h1{
+  font-size:44px;
+  font-family:Georgia,serif;
+  font-weight:500;
+}
+
+.mission-title{
+  font-family:cursive;
+  font-size:48px;
+  color:#ff5da8;
+  margin-bottom:25px;
+}
+
+.divider{
+  color:#ff79b8;
+  margin-bottom:25px;
+}
+
+.description{
+  color:#ded4e1;
+  font-size:17px;
+  line-height:1.8;
+  margin-bottom:30px;
+}
+
+.description b{
+  color:#ff75b8;
+}
+
+.mission-box{
+  border:1px dashed rgba(255,90,170,.7);
+  border-radius:25px;
+  padding:25px 15px;
+  margin-bottom:30px;
+  background:rgba(40,10,45,.55);
+}
+
+.puzzle-icon{
+  font-size:40px;
+  margin-bottom:8px;
+}
+
+.mission-box h2{
+  color:#ff86c1;
+  margin-bottom:10px;
+}
+
+.mission-box p{
+  font-size:17px;
+  line-height:1.6;
+}
+
+.start-btn,
+.submit-btn,
+.next-btn{
+  width:100%;
+  padding:18px;
+  border:none;
+  border-radius:50px;
+  background:linear-gradient(135deg,#ff4f9d,#d91969);
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 0 20px rgba(255,30,130,.6);
+}
+
+.secret{
+  margin-top:25px;
+  color:#c9bfd1;
+}
+
+.ready{
+  text-align:center;
+  font-size:17px;
+  color:#ddd;
+}
+
+/* QUESTION SCREEN */
+
+.question-wrap,
+.puzzle-wrap{
+  width:90%;
+  max-width:460px;
+  margin:45px auto;
+  text-align:center;
+}
+
+.level{
+  display:inline-block;
+  padding:8px 18px;
+  border:1px solid #ff5da8;
+  border-radius:30px;
+  color:#ff8bc3;
+  font-size:12px;
+  letter-spacing:1.5px;
+  margin-bottom:25px;
+}
+
+.question-card,
+.puzzle-card{
+  padding:32px 22px;
+  border-radius:32px;
+  background:linear-gradient(
+    180deg,
+    rgba(62,8,48,.85),
+    rgba(13,7,25,.92)
+  );
+  border:1px solid rgba(255,120,190,.6);
+  box-shadow:0 0 35px rgba(255,0,130,.18);
+}
+
+.question-icon{
+  font-size:52px;
+  margin-bottom:18px;
+}
+
+.question-card h2,
+.puzzle-card h2{
+  font-size:26px;
+  line-height:1.4;
+  margin-bottom:25px;
+}
+
+.answer-input{
+  width:100%;
+  padding:17px;
+  border-radius:15px;
+  border:1px solid rgba(255,120,190,.5);
+  background:rgba(255,255,255,.07);
+  color:white;
+  font-size:16px;
+  outline:none;
+  margin-bottom:15px;
+  text-align:center;
+}
+
+.answer-input:focus{
+  border-color:#ff5da8;
+}
+
+.answer-input::placeholder{
+  color:#aaa;
+}
+
+.message{
+  min-height:25px;
+  margin-top:15px;
+  color:#ff8bc3;
+}
+
+/* PHOTO PUZZLE - 4 x 4 */
+
+.puzzle-info{
+  color:#ddd;
+  font-size:15px;
+  line-height:1.6;
+  margin-bottom:20px;
+}
+
+#puzzleBoard{
+  width:100%;
+  aspect-ratio:1 / 1;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:3px;
+  border-radius:18px;
+  overflow:hidden;
+  background:#000;
+  margin-bottom:20px;
+}
+
+.tile{
+  cursor:pointer;
+  background-image:url("puzzle.jpg");
+  background-repeat:no-repeat;
+  background-size:400% 400%;
+  border:2px solid transparent;
+  transition:0.2s;
+}
+
+.tile.selected{
+  border:3px solid #ff5da8;
+  transform:scale(.94);
+}
+
+.success-box{
+  display:none;
+  margin-top:20px;
+  padding:20px;
+  border-radius:20px;
+  background:rgba(255,50,140,.12);
+  border:1px solid #ff5da8;
+  color:#fff;
+}
+
+.success-box h3{
+  color:#ff86c1;
+  margin-bottom:8px;
+  font-size:22px;
+}
+
+#nextLevelBtn{
+  display:none;
+  margin-top:18px;
+}
+/* LEVEL 3 */
+
+.option-btn{
+  width:100%;
+  margin:10px 0;
+  padding:17px;
+  border-radius:18px;
+  border:1px solid rgba(255,120,190,.45);
+  background:rgba(255,255,255,.06);
+  color:white;
+  font-size:17px;
+  cursor:pointer;
+}
+
+.option-btn:active{
+  transform:scale(.97);
+}
+
+.option-btn.correct{
+  background:rgba(50,200,120,.2);
+  border-color:#5cff9d;
+}
+
+.option-btn.wrong{
+  background:rgba(255,50,100,.18);
+  border-color:#ff5d8f;
+}
+  /* HINT BUTTON */
+
+.hint-btn{
+  margin-top:15px;
+  padding:10px 18px;
+  border-radius:30px;
+  border:1px solid rgba(255,120,190,.6);
+  background:rgba(255,255,255,.06);
+  color:#ff8bc3;
+  font-size:18px;
+  cursor:pointer;
+}
+
+.hint-text{
+  display:none;
+  margin-top:12px;
+  color:#ddd;
+  font-size:15px;
+  line-height:1.5;
+  }
+  /* LEVEL 5 */
+
+.final-lock{
+  width:85px;
+  height:85px;
+  margin:0 auto 20px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:42px;
+  background:rgba(255,0,150,.08);
+  border:2px solid #ff55ad;
+  box-shadow:0 0 25px #ff2f9a;
+}
+  /* =========================
+   FINAL CINEMATIC SCREENS
+========================= */
+
+.final-screen{
+  display:none;
+  min-height:100vh;
+  width:100%;
+  padding:25px 20px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.final-screen.active{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+/* BLACK CINEMATIC SCREEN */
+
+.black-theme{
+  background:#000;
+  color:white;
+}
+
+.big-heart{
+  font-size:100px;
+  animation:heartBeat 1s infinite alternate;
+  filter:drop-shadow(0 0 25px #ff2f92);
+  margin-bottom:25px;
+}
+
+@keyframes heartBeat{
+
+  from{
+    transform:scale(.9);
+  }
+
+  to{
+    transform:scale(1.15);
+  }
+
+}
+
+.congrats-title{
+  font-family:Georgia,serif;
+  font-size:38px;
+  line-height:1.25;
+  margin-bottom:25px;
+  animation:fadeUp 1s ease;
+}
+
+.congrats-title span{
+  color:#ff5da8;
+}
+
+.final-text{
+  max-width:500px;
+  color:#e2dce5;
+  line-height:1.8;
+  font-size:17px;
+  margin-bottom:30px;
+}
+
+.final-text b{
+  color:#ff78b9;
+}
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(25px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+
+/* ENVELOPE BUTTON */
+
+.envelope-btn{
+  border:none;
+  background:transparent;
+  cursor:pointer;
+  animation:floatEnvelope 2s infinite ease-in-out;
+}
+
+.envelope-icon{
+  font-size:70px;
+  filter:drop-shadow(0 0 18px rgba(255,70,160,.7));
+}
+
+.envelope-label{
+  display:block;
+  color:#ff85c2;
+  margin-top:12px;
+  font-size:15px;
+  letter-spacing:1px;
+}
+
+@keyframes floatEnvelope{
+
+  0%,100%{
+    transform:translateY(0);
+  }
+
+  50%{
+    transform:translateY(-12px);
+  }
+
+}
+
+
+/* COUNTDOWN */
+
+.countdown-number{
+  font-size:120px;
+  font-family:Georgia,serif;
+  font-weight:bold;
+  animation:countPop .8s ease;
+  text-shadow:0 0 30px #ff3f9c;
+}
+
+@keyframes countPop{
+
+  from{
+    transform:scale(.3);
+    opacity:0;
+  }
+
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+
+}
+
+
+/* BIRTHDAY CELEBRATION */
+
+.birthday-theme{
+  background:
+    radial-gradient(circle at top, #ffb3d9, transparent 30%),
+    radial-gradient(circle at bottom, #ffc1df, transparent 35%),
+    linear-gradient(135deg,#ff4f9d,#7d245d);
+  color:white;
+}
+
+.birthday-content{
+  position:relative;
+  z-index:2;
+  max-width:520px;
+  animation:fadeUp 1s ease;
+}
+
+.birthday-title{
+  font-family:Georgia,serif;
+  font-size:43px;
+  line-height:1.15;
+  text-shadow:0 3px 15px rgba(0,0,0,.25);
+  margin-bottom:20px;
+}
+
+.eshu-name{
+  display:block;
+  font-family:cursive;
+  font-size:65px;
+  margin-top:8px;
+  text-shadow:0 0 20px rgba(255,255,255,.8);
+}
+
+.birthday-message{
+  font-size:17px;
+  line-height:1.9;
+  margin:25px 0 30px;
+}
+
+.personal-btn{
+  padding:17px 25px;
+  border:none;
+  border-radius:50px;
+  background:white;
+  color:#c4216c;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 8px 25px rgba(0,0,0,.2);
+}
+
+
+/* PERSONAL LETTER */
+
+.letter-box{
+  display:none;
+  width:100%;
+  max-width:460px;
+  margin-top:25px;
+  padding:25px;
+  border-radius:25px;
+  background:rgba(255,255,255,.94);
+  color:#5d2140;
+  box-shadow:0 10px 35px rgba(0,0,0,.25);
+  text-align:left;
+  animation:fadeUp .7s ease;
+}
+
+.letter-box.open{
+  display:block;
+}
+
+.letter-header{
+  text-align:center;
+  font-size:28px;
+  margin-bottom:20px;
+}
+
+.personal-message{
+  line-height:1.8;
+  font-size:16px;
+  white-space:pre-line;
+}
+
+
+/* FLOWERS */
+
+.flower{
+  position:absolute;
+  top:-60px;
+  z-index:1;
+  animation:fall linear forwards;
+  pointer-events:none;
+}
+
+@keyframes fall{
+
+  from{
+    transform:translateY(-60px) rotate(0deg);
+    opacity:1;
+  }
+
+  to{
+    transform:translateY(110vh) rotate(360deg);
+    opacity:.7;
+  }
+
+  }
+</style>
+</head>
+
+<body>
+
+<!-- START SCREEN -->
+
+<div id="startScreen" class="screen active">
+
+  <div class="top-text">
+    ♡ SOMETHING SPECIAL AWAITS YOU ♡
+  </div>
+
+  <div class="card">
+
+    <div class="lock-box">🔐</div>
+
+    <h1>A Secret</h1>
+
+    <div class="mission-title">
+      Mission
+    </div>
+
+    <div class="divider">
+      ─── ♡ ───
+    </div>
+
+    <div class="description">
+      Aaj kuch <b>ordinary</b> nahi hone wala...<br>
+      Lekin aagay barhne ke liye tumhein<br>
+      kuch <b>raaz</b> solve karne honge.
+    </div>
+
+    <div class="mission-box">
+      <div class="puzzle-icon">🧩</div>
+
+      <h2>MISSION:</h2>
+
+      <p>
+        Solve it together.<br>
+        Unlock the secret.
+      </p>
+    </div>
+
+    <button class="start-btn" onclick="startMission()">
+      START THE MISSION 🚀
+    </button>
+
+    <div class="secret">
+      🔐 The secret is waiting for you... ✨
+    </div>
+
+  </div>
+
+  <div class="ready">
+    ✦ ─── Are you ready? 💕 ─── ✦
+  </div>
+
+</div>
+
+
+<!-- LEVEL 1 -->
+
+<div id="questionScreen" class="screen">
+
+  <div class="question-wrap">
+
+    <div class="level">
+      LEVEL 1 • THE MAIN CHARACTER
+    </div>
+
+    <div class="question-card">
+
+      <div class="question-icon">👀</div>
+
+      <h2>
+        Aaj ki kahani ka<br>
+        main character kaun hai?
+      </h2>
+
+      <input
+        type="text"
+        id="answer"
+        class="answer-input"
+        placeholder="Apna jawab yahan likho..."
+      >
+
+      <button class="submit-btn" onclick="checkAnswer()">
+        CHECK ANSWER 🔍
+      </button>
+
+      <div id="message" class="message"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- LEVEL 2 PHOTO PUZZLE -->
+
+<div id="puzzleScreen" class="screen">
+
+  <div class="puzzle-wrap">
+
+    <div class="level">
+      LEVEL 2 • PIECES OF THE MEMORY
+    </div>
+
+    <div class="puzzle-card">
+
+      <div class="question-icon">🧩</div>
+
+      <h2>Picture ko complete karo 👀</h2>
+
+      <p class="puzzle-info">
+        Do pieces ko tap karo aur unki position swap karo.<br>
+        Tasveer complete hote hi agla raaz unlock hoga.
+      </p>
+
+      <div id="puzzleBoard"></div>
+
+      <div id="successBox" class="success-box">
+        <h3>❤️ Teamwork Check: PASSED!</h3>
+        <p>Tumne memory ko dobara complete kar diya... ✨</p>
+      </div>
+
+      <button
+        id="nextLevelBtn"
+        class="next-btn"
+        onclick="nextLevel()"
+      >
+        NEXT MYSTERY 🔐
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+<!-- LEVEL 3 -->
+
+<div id="level3Screen" class="screen">
+
+  <div class="question-wrap">
+
+    <div class="level">
+      LEVEL 3 • Emoji's Mystery 
+    </div>
+
+    <div class="question-card">
+
+      <div class="question-icon">👑</div>
+
+      <h2>
+        In emojis ka jawab kya hai? 👀
+      </h2>
+
+      <p style="font-size:45px; margin-bottom:25px;">
+        🎂 + 👑 + 🎉
+      </p>
+
+      <input
+        type="text"
+        id="level3Answer"
+        class="answer-input"
+        placeholder="Apna jawab yahan likho..."
+      >
+
+      <button class="submit-btn" onclick="checkLevel3()">
+        CHECK ANSWER 🔍
+      </button>
+
+      <div id="level3Message" class="message"></div>
+
+    </div>
+
+  </div>
+
+</div>
+<!-- LEVEL 4 -->
+
+<div id="level4Screen" class="screen">
+
+  <div class="question-wrap">
+
+    <div class="level">
+      LEVEL 4 • MEMORY CHECK 🧠
+    </div>
+
+    <div class="question-card">
+
+      <div class="question-icon">💭</div>
+
+      <h2>
+        Ek aisi cheez jo hamare paas physically nahi hoti,
+        lekin jitni zyada purani hoti jaye,
+        utni zyada special ban jati hai?
+      </h2>
+
+      <button class="hint-btn" onclick="showHint()">
+        🧠
+      </button>
+
+      <div id="hintText" class="hint-text">
+        Kabhi kabhi ek chhota sa lamha bhi hamesha ke liye yaad reh jata hai... 💭
+      </div>
+
+      <br>
+
+      <input
+        type="text"
+        id="level4Answer"
+        class="answer-input"
+        placeholder="Apna jawab yahan likho..."
+      >
+
+      <button class="submit-btn" onclick="checkLevel4()">
+        CHECK ANSWER 🔍
+      </button>
+
+      <div id="level4Message" class="message"></div>
+
+    </div>
+
+  </div>
+
+</div>
+  <!-- LEVEL 5 -->
+
+<div id="level5Screen" class="screen">
+
+  <div class="question-wrap">
+
+    <div class="level">
+      LEVEL 5 • FINAL RIDDLE 🔐
+    </div>
+
+    <div class="question-card">
+
+      <div class="final-lock">🔐</div>
+
+      <h2>
+        Main woh hoon jo nazar nahi aata,<br>
+        haath mein pakra nahi ja sakta,<br>
+        lekin agar main kisi ke saath hoon,<br>
+        toh woh shakhs kabhi akela nahi lagta.<br><br>
+        Batao main kya hoon? 👀
+      </h2>
+
+      <button class="hint-btn" onclick="showHint5()">
+        🧠
+      </button>
+
+      <div id="hintText5" class="hint-text">
+        Dil se judi hui cheez... 💕
+      </div>
+
+      <br>
+
+      <input
+        type="text"
+        id="level5Answer"
+        class="answer-input"
+        placeholder="Apna jawab yahan likho..."
+      >
+
+      <button class="submit-btn" onclick="checkLevel5()">
+        UNLOCK 🔐
+      </button>
+
+      <div id="level5Message" class="message"></div>
+
+    </div>
+
+  </div>
+
+</div>
+  <!-- =========================
+     FINAL CONGRATULATIONS
+========================= -->
+
+<div id="finalCongratsScreen" class="final-screen black-theme">
+
+  <div class="big-heart">❤️</div>
+
+  <h1 class="congrats-title">
+    🎉 CONGRATULATIONS,<br>
+    <span>BIRTHDAY QUEEN 👑</span>
+  </h1>
+
+  <div class="final-text">
+
+    <b>Tumne har puzzle solve kar liya... 🧩</b><br>
+    Har mystery unlock kar di... 🔐<br>
+    Aur prove kar diya ke aaj ki mission ki asli hero kaun hai. 👀✨
+
+    <br><br>
+
+    Lekin... ek cheez abhi bhi baqi hai. 🎁<br>
+
+    <b>Ek aakhri surprise, jo sirf tumhare liye hai... ❤️</b>
+
+  </div>
+
+  <button class="envelope-btn" onclick="startCountdown()">
+
+    <span class="envelope-icon">💌</span>
+
+    <span class="envelope-label">
+      OPEN THE FINAL SURPRISE
+    </span>
+
+  </button>
+
+</div>
+
+
+<!-- =========================
+     COUNTDOWN SCREEN
+========================= -->
+
+<div id="countdownScreen" class="final-screen black-theme">
+
+  <div id="countdownNumber" class="countdown-number">
+    3
+  </div>
+
+</div>
+
+
+<!-- =========================
+     BIRTHDAY SCREEN
+========================= -->
+
+<div id="birthdayScreen" class="final-screen birthday-theme">
+
+  <div class="birthday-content">
+
+    <div style="font-size:60px;">🎂</div>
+
+    <h1 class="birthday-title">
+
+      HAPPY BIRTHDAY
+
+      <span class="eshu-name">
+        ESHU 💕
+      </span>
+
+    </h1>
+
+    <div class="birthday-message">
+
+      <b>Aaj ka din sirf tumhara hai... 👑✨</b>
+
+      <br><br>
+
+      Muskurati raho, khush raho,<br>
+      aur apni is cute si smile ko kabhi khona mat. 💕
+
+      <br><br>
+
+      <b>
+        Because today, the world got its Birthday Queen. 🎂👑
+      </b>
+
+    </div>
+
+    <button class="personal-btn" onclick="openLetter()">
+      💌 MY PERSONAL MESSAGE FOR YOU
+    </button>
+
+
+    <!-- YAHAN APNA MESSAGE LIKHNA -->
+
+    <div id="letterBox" class="letter-box">
+
+      <div class="letter-header">
+        💌 For Eshu
+      </div>
+
+      <div class="personal-message">
+
+YAHAN APNA PERSONAL MESSAGE LIKHNA HAI ❤️
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+<script>
+
+/* START MISSION */
+
+function startMission(){
+  document.getElementById("startScreen").classList.remove("active");
+  document.getElementById("questionScreen").classList.add("active");
+}
+
+
+/* LEVEL 1 */
+
+function checkAnswer(){
+
+  const answer = document
+    .getElementById("answer")
+    .value
+    .trim()
+    .toLowerCase();
+
+  const correctAnswer = "eshal noor";
+
+  const message = document.getElementById("message");
+
+  if(answer === correctAnswer){
+
+    message.innerHTML =
+      "✨ Bilkul sahi! Ab agla raaz tumhara intezar kar raha hai...";
+
+    setTimeout(function(){
+
+      document
+        .getElementById("questionScreen")
+        .classList.remove("active");
+
+      document
+        .getElementById("puzzleScreen")
+        .classList.add("active");
+
+      createPuzzle();
+
+    },1500);
+
+  }else{
+
+    message.innerHTML =
+      "😏 Hmm... dobara socho.";
+
+  }
+
+}
+
+
+/* PHOTO PUZZLE - 4 x 4 */
+
+const correctOrder = [
+  0,1,2,3,
+  4,5,6,7,
+  8,9,10,11,
+  12,13,14,15
+];
+
+let puzzleOrder = [];
+let selectedTile = null;
+
+
+function createPuzzle(){
+
+  const board = document.getElementById("puzzleBoard");
+
+  board.innerHTML = "";
+
+  puzzleOrder = [
+    0,1,2,3,
+    4,5,6,7,
+    8,9,10,11,
+    12,13,14,15
+  ];
+
+  do{
+    shuffle(puzzleOrder);
+  }while(isSolved());
+
+  selectedTile = null;
+
+  document.getElementById("successBox").style.display = "none";
+  document.getElementById("nextLevelBtn").style.display = "none";
+
+  renderPuzzle();
+}
+
+
+function shuffle(array){
+
+  for(let i = array.length - 1; i > 0; i--){
+
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [array[i],array[j]] =
+      [array[j],array[i]];
+
+  }
+
+}
+
+
+function renderPuzzle(){
+
+  const board = document.getElementById("puzzleBoard");
+
+  board.innerHTML = "";
+
+  puzzleOrder.forEach(function(piece,index){
+
+    const tile = document.createElement("div");
+
+    tile.className = "tile";
+
+    const row = Math.floor(piece / 4);
+    const col = piece % 4;
+
+    tile.style.backgroundPosition =
+      (col * 33.3333) + "% " +
+      (row * 33.3333) + "%";
+
+    tile.dataset.index = index;
+
+    tile.onclick = function(){
+      selectTile(index);
+    };
+
+    board.appendChild(tile);
+
+  });
+
+}
+
+
+function selectTile(index){
+
+  const tiles = document.querySelectorAll(".tile");
+
+  if(selectedTile === null){
+
+    selectedTile = index;
+
+    tiles[index].classList.add("selected");
+
+  }else if(selectedTile === index){
+
+    tiles[index].classList.remove("selected");
+
+    selectedTile = null;
+
+  }else{
+
+    const temp = puzzleOrder[selectedTile];
+
+    puzzleOrder[selectedTile] = puzzleOrder[index];
+
+    puzzleOrder[index] = temp;
+
+    selectedTile = null;
+
+    renderPuzzle();
+
+    if(isSolved()){
+      puzzleCompleted();
+    }
+
+  }
+
+}
+
+
+function isSolved(){
+
+  for(let i = 0; i < correctOrder.length; i++){
+
+    if(puzzleOrder[i] !== correctOrder[i]){
+      return false;
+    }
+
+  }
+
+  return true;
+
+}
+      
+  function puzzleCompleted(){
+
+  document
+    .getElementById("successBox")
+    .style.display = "block";
+
+  document
+    .getElementById("nextLevelBtn")
+    .style.display = "block";
+
+}
+
+
+/* NEXT LEVEL */
+
+function nextLevel(){
+
+  document
+    .getElementById("puzzleScreen")
+    .classList.remove("active");
+
+  document
+    .getElementById("level3Screen")
+    .classList.add("active");
+
+      }
+
+
+/* =========================
+   LEVEL 3 - EMOJI MYSTERY
+========================= */
+
+function checkLevel3(){
+
+  const answer = document
+    .getElementById("level3Answer")
+    .value
+    .trim()
+    .toLowerCase();
+
+  const message =
+    document.getElementById("level3Message");
+
+  if(answer === "birthday queen"){
+
+    message.innerHTML =
+      "👑 Bilkul sahi! Birthday Queen ne agla raaz unlock kar diya 😏✨";
+
+    setTimeout(function(){
+
+      document
+        .getElementById("level3Screen")
+        .classList.remove("active");
+
+      document
+        .getElementById("level4Screen")
+        .classList.add("active");
+
+    }, 1200);
+
+  }else{
+
+    message.innerHTML =
+      "😏 Hmm... emojis ko dobara dhyan se dekho.";
+
+  }
+
+}
+
+
+/* =========================
+   LEVEL 4 - MEMORY CHECK
+========================= */
+
+function showHint(){
+
+  const hint =
+    document.getElementById("hintText");
+
+  if(hint.style.display === "block"){
+
+    hint.style.display = "none";
+
+  }else{
+
+    hint.style.display = "block";
+
+  }
+
+}
+/* =========================
+   LEVEL 4 - MEMORY CHECK
+========================= */
+
+function checkLevel4(){
+
+  const answer = document
+    .getElementById("level4Answer")
+    .value
+    .trim()
+    .toLowerCase();
+
+  const message =
+    document.getElementById("level4Message");
+
+  const correctAnswers = [
+    "memory",
+    "memorry",
+    "memorries",
+    "memories",
+    "yadien",
+    "yadein",
+    "yaden"
+  ];
+
+  if(correctAnswers.includes(answer)){
+
+    message.innerHTML =
+      "✨ Bilkul sahi... kuch memories waqt ke saath aur bhi special ho jati hain. 💕";
+
+    setTimeout(function(){
+
+      document
+        .getElementById("level4Screen")
+        .classList.remove("active");
+
+      document
+        .getElementById("level5Screen")
+        .classList.add("active");
+
+    },1200);
+
+  }else{
+
+    message.innerHTML =
+      "😏 Thora aur socho... jawab tumhare bohat qareeb hai.";
+
+  }
+
+}
+
+
+/* =========================
+   LEVEL 5 - FINAL RIDDLE
+========================= */
+
+function showHint5(){
+
+  const hint =
+    document.getElementById("hintText5");
+
+  if(hint.style.display === "block"){
+    hint.style.display = "none";
+  }else{
+    hint.style.display = "block";
+  }
+
+}
+/* =========================
+   LEVEL 5 - FINAL RIDDLE
+========================= */
+
+function showHint5(){
+
+  const hint =
+    document.getElementById("hintText5");
+
+  if(hint.style.display === "block"){
+
+    hint.style.display = "none";
+
+  }else{
+
+    hint.style.display = "block";
+
+  }
+
+}
+
+
+function checkLevel5(){
+
+  const answer = document
+    .getElementById("level5Answer")
+    .value
+    .trim()
+    .toLowerCase();
+
+  const message =
+    document.getElementById("level5Message");
+
+  const correctAnswers = [
+    "connection",
+    "bond",
+    "relationship",
+    "connection with someone"
+  ];
+
+  if(correctAnswers.includes(answer)){
+
+    message.innerHTML =
+      "🔓 Correct... tumne final riddle solve kar li!";
+
+    setTimeout(function(){
+
+      document
+        .getElementById("level5Screen")
+        .classList.remove("active");
+
+      document
+        .getElementById("finalCongratsScreen")
+        .classList.add("active");
+
+    },1000);
+
+  }else{
+
+    message.innerHTML =
+      "😏 Nahi... thora aur gehra socho.";
+
+  }
+
+}
+
+
+/* =========================
+   FINAL COUNTDOWN
+========================= */
+
+function startCountdown(){
+
+  document
+    .getElementById("finalCongratsScreen")
+    .classList.remove("active");
+
+  document
+    .getElementById("countdownScreen")
+    .classList.add("active");
+
+  const number =
+    document.getElementById("countdownNumber");
+
+  let count = 3;
+
+  number.innerHTML = count;
+
+  const timer = setInterval(function(){
+
+    count--;
+
+    if(count > 0){
+
+      number.innerHTML = count;
+
+      number.style.animation = "none";
+
+      setTimeout(function(){
+        number.style.animation = "countPop .8s ease";
+      },20);
+
+    }else{
+
+      clearInterval(timer);
+
+      document
+        .getElementById("countdownScreen")
+        .classList.remove("active");
+
+      document
+        .getElementById("birthdayScreen")
+        .classList.add("active");
+
+      startFlowers();
+
+    }
+
+  },1000);
+
+}
+
+
+/* =========================
+   OPEN PERSONAL LETTER
+========================= */
+
+function openLetter(){
+
+  document
+    .getElementById("letterBox")
+    .classList.toggle("open");
+
+}
+
+
+/* =========================
+   FLOWER RAIN
+========================= */
+
+function startFlowers(){
+
+  const birthdayScreen =
+    document.getElementById("birthdayScreen");
+
+  const flowers = [
+    "🌸",
+    "🌷",
+    "🌹",
+    "💮",
+    "🪻"
+  ];
+
+  setInterval(function(){
+
+    const flower =
+      document.createElement("div");
+
+    flower.className = "flower";
+
+    flower.innerHTML =
+      flowers[Math.floor(
+        Math.random() * flowers.length
+      )];
+
+    flower.style.left =
+      Math.random() * 100 + "%";
+
+    flower.style.fontSize =
+      (20 + Math.random() * 25) + "px";
+
+    flower.style.animationDuration =
+      (4 + Math.random() * 4) + "s";
+
+    birthdayScreen.appendChild(flower);
+
+    setTimeout(function(){
+      flower.remove();
+    },9000);
+
+  },450);
+
+  }
+
+
+</script>
+
+</body>
+</html>
