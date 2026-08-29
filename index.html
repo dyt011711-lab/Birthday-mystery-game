@@ -2316,6 +2316,29 @@ if(!playerId){
 
 }
   /* =========================
+   CHAT SESSION
+========================= */
+
+let chatSessionId =
+  sessionStorage.getItem("birthdayChatSessionId");
+
+if(!chatSessionId){
+
+  chatSessionId =
+    "chat_" +
+    Date.now() +
+    "_" +
+    Math.random()
+      .toString(36)
+      .substring(2,8);
+
+  sessionStorage.setItem(
+    "birthdayChatSessionId",
+    chatSessionId
+  );
+
+}
+  /* =========================
    LIVE CHAT
 ========================= */
 
@@ -2348,7 +2371,7 @@ window.sendChatMessage = async function(){
 
       time: Date.now(),
 
-      session: "current"
+      session: chatSessionId"
 
     });
 
@@ -2384,8 +2407,8 @@ onChildAdded(chatRef, function(snapshot){
 
   /* Ignore old messages */
 
-  if(!data.session) return;
-
+  
+if(data.session !== chatSessionId) return;
 
   const messageBox =
     document.createElement("div");
