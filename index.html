@@ -1585,12 +1585,39 @@ ky ap mery sath ho or birthday celebrate kar rhi ho to or kya hosakta hai mery l
 /* START MISSION */
 
 function startMission(){
+
+  /* Apni progress Firebase mein save */
+
   saveGameProgress(1);
-  document.getElementById("startScreen").classList.remove("active");
-  document.getElementById("questionScreen").classList.add("active");
+
+
+  /* Apna screen immediately change */
+
+  const startScreen =
+    document.getElementById("startScreen");
+
+  const questionScreen =
+    document.getElementById("questionScreen");
+
+
+  if(startScreen){
+
+    startScreen
+      .classList
+      .remove("active");
+
+  }
+
+
+  if(questionScreen){
+
+    questionScreen
+      .classList
+      .add("active");
+
+  }
+
 }
-
-
 /* LEVEL 1 */
 
 function checkAnswer(){
@@ -2317,7 +2344,185 @@ if(!playerId){
   );
 
 }
+/* =========================
+   LIVE ANSWER TYPING
+========================= */
 
+const answerFields = [
+  "answer",
+  "level3Answer",
+  "level4Answer",
+  "level5Answer"
+];
+
+const typingPreviews = {};
+
+answerFields.forEach(function(id){
+
+  const input =
+    document.getElementById(id);
+
+  if(!input) return;
+
+
+  /* Preview box */
+
+  const preview =
+    document.createElement("div");
+
+  preview.style.fontSize = "12px";
+  preview.style.color = "#888";
+  preview.style.marginTop = "6px";
+  preview.style.minHeight = "18px";
+
+
+  input.parentNode.insertBefore(
+    preview,
+    input.nextSibling
+  );
+
+
+  typingPreviews[id] = preview;
+
+
+  /* Firebase path:
+     har player ka apna typing node */
+
+  const typingRef = ref(
+    database,
+    "rooms/" +
+    SECRET_ROOM +
+    "/typing/" +
+    id +
+    "/" +
+    playerId
+  );
+
+
+  /* Page/browser disconnect par
+     apna purana typing automatically remove */
+
+  onDisconnect(typingRef)
+    .remove()
+    .catch(function(error){
+
+      console.error(
+        "Typing disconnect error:",
+        error
+      );
+
+    });
+
+
+  /* SEND TYPING */
+
+  input.addEventListener(
+    "input",
+    function(){
+
+      const text =
+        input.value.trim();
+
+
+      /* Empty hone par Firebase se
+         typing remove */
+
+      if(!text){
+
+        remove(typingRef)
+          .catch(function(error){
+
+            console.error(
+              "Typing remove error:",
+              error
+            );
+
+          });
+
+        return;
+
+      }
+
+
+      set(typingRef, {
+
+        sender: playerId,
+
+        text: text,
+
+        updatedAt: Date.now()
+
+      }).catch(function(error){
+
+        console.error(
+          "Typing sync error:",
+          error
+        );
+
+      });
+
+    }
+  );
+
+
+  /* RECEIVE OTHER PLAYER TYPING */
+
+  const typingRoomRef = ref(
+    database,
+    "rooms/" +
+    SECRET_ROOM +
+    "/typing/" +
+    id
+  );
+
+
+  onValue(
+    typingRoomRef,
+    function(snapshot){
+
+      const allPlayers =
+        snapshot.val() || {};
+
+
+      let otherPlayerText = "";
+
+
+      Object.keys(allPlayers).forEach(
+        function(otherId){
+
+          if(
+            otherId !== playerId &&
+            allPlayers[otherId]
+          ){
+
+            otherPlayerText =
+              allPlayers[otherId].text || "";
+
+          }
+
+        }
+      );
+
+
+      if(!typingPreviews[id]) return;
+
+
+      if(otherPlayerText){
+
+        typingPreviews[id].innerHTML =
+          "👀 Other player is typing: " +
+          otherPlayerText;
+
+      }else{
+
+        typingPreviews[id].innerHTML = "";
+
+      }
+
+    }
+  );
+
+});
   /* =========================
    LIVE CHAT
 ========================= */
