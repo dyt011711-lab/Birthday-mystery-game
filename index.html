@@ -1748,10 +1748,18 @@ function selectTile(index){
 
     renderPuzzle();
 
-    if(isSolved()){
-      puzzleCompleted();
-    }
+/* LIVE PUZZLE SYNC */
+set(livePuzzleRef, {
+  order: puzzleOrder,
+  sender: playerId,
+  updatedAt: Date.now()
+}).catch(function(error){
+  console.error("Puzzle sync error:", error);
+});
 
+if(isSolved()){
+  puzzleCompleted();
+}
   }
 
 }
@@ -1798,8 +1806,35 @@ function nextLevel(){
 
       } 
 
+/* =========================
+   RECEIVE LIVE PUZZLE
+========================= */
 
+onValue(livePuzzleRef, function(snapshot){
 
+  const data = snapshot.val();
+
+  if(!data) return;
+
+  /* Apni movement ignore karo */
+  if(data.sender === playerId) return;
+
+  if(!Array.isArray(data.order)) return;
+
+  puzzleOrder = data.order.slice();
+
+  selectedTile = null;
+
+  renderPuzzle();
+
+  /* Agar doosre player ne puzzle solve kar liya */
+  if(isSolved()){
+
+    puzzleCompleted();
+
+  }
+
+});
 
 /* =========================
    LEVEL 3 - EMOJI MYSTERY
