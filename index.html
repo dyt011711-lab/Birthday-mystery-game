@@ -1759,9 +1759,306 @@ function selectTile(index){
 function isSolved(){
 
   for(let i = 0; i < correctOrder.length; i++){
+/* =========================
+   PHOTO PUZZLE - 4 x 4
+   LIVE MULTIPLAYER
+========================= */
 
-    if(puzzleOrder[i] !== correctOrder[i]){
+const correctOrder = [
+  0,1,2,3,
+  4,5,6,7,
+  8,9,10,11,
+  12,13,14,15
+];
+
+let puzzleOrder = [];
+let selectedTile = null;
+
+
+/* Firebase puzzle location */
+
+const puzzleRef = ref(
+  database,
+  "rooms/" + SECRET_ROOM + "/puzzle"
+);
+
+
+/* =========================
+   CREATE PUZZLE
+========================= */
+
+async function createPuzzle(){
+
+  const board =
+    document.getElementById("puzzleBoard");
+
+  if(!board) return;
+
+  board.innerHTML = "";
+
+  selectedTile = null;
+
+
+  /* Check if puzzle already exists */
+
+  onValue(
+    puzzleRef,
+    function(snapshot){
+
+      const data = snapshot.val();
+
+
+      /* Existing shared puzzle */
+
+      if(data && Array.isArray(data.order)){
+
+        puzzleOrder = data.order;
+
+        renderPuzzle();
+
+        if(isSolved()){
+
+          showPuzzleSuccess();
+
+        }
+
+        return;
+
+      }
+
+
+      /* No puzzle exists yet
+         → create one */
+
+      puzzleOrder = [
+        0,1,2,3,
+        4,5,6,7,
+        8,9,10,11,
+        12,13,14,15
+      ];
+
+
+      do{
+
+        shuffle(puzzleOrder);
+
+      }while(isSolved());
+
+
+      set(puzzleRef, {
+
+        order: puzzleOrder,
+
+        updatedAt: Date.now(),
+
+        sender: playerId
+
+      });
+
+
+      document
+        .getElementById("successBox")
+        .style.display = "none";
+
+      document
+        .getElementById("nextLevelBtn")
+        .style.display = "none";
+
+
+      renderPuzzle();
+
+    },
+
+    {
+      onlyOnce: true
+    }
+
+  );
+
+}
+
+
+/* =========================
+   SHUFFLE
+========================= */
+
+function shuffle(array){
+
+  for(
+    let i = array.length - 1;
+    i > 0;
+    i--
+  ){
+
+    const j =
+      Math.floor(
+        Math.random() * (i + 1)
+      );
+
+    [
+      array[i],
+      array[j]
+    ] =
+    [
+      array[j],
+      array[i]
+    ];
+
+  }
+
+}
+
+
+/* =========================
+   RENDER PUZZLE
+========================= */
+
+function renderPuzzle(){
+
+  const board =
+    document.getElementById("puzzleBoard");
+
+  if(!board) return;
+
+  board.innerHTML = "";
+
+
+  puzzleOrder.forEach(
+    function(piece,index){
+
+      const tile =
+        document.createElement("div");
+
+      tile.className = "tile";
+
+
+      const row =
+        Math.floor(piece / 4);
+
+      const col =
+        piece % 4;
+
+
+      tile.style.backgroundPosition =
+        (col * 33.3333) + "% " +
+        (row * 33.3333) + "%";
+
+
+      tile.dataset.index = index;
+
+
+      tile.onclick = function(){
+
+        selectTile(index);
+
+      };
+
+
+      board.appendChild(tile);
+
+    }
+  );
+
+}
+
+
+/* =========================
+   SELECT / MOVE TILE
+========================= */
+
+function selectTile(index){
+
+  const tiles =
+    document.querySelectorAll(".tile");
+
+
+  if(selectedTile === null){
+
+    selectedTile = index;
+
+    tiles[index]
+      .classList
+      .add("selected");
+
+  }
+
+
+  else if(selectedTile === index){
+
+    tiles[index]
+      .classList
+      .remove("selected");
+
+    selectedTile = null;
+
+  }
+
+
+  else{
+
+    const temp =
+      puzzleOrder[selectedTile];
+
+
+    puzzleOrder[selectedTile] =
+      puzzleOrder[index];
+
+
+    puzzleOrder[index] =
+      temp;
+
+
+    selectedTile = null;
+
+
+    renderPuzzle();
+
+
+    /* SAVE MOVE TO FIREBASE */
+
+    set(puzzleRef, {
+
+      order: puzzleOrder,
+
+      updatedAt: Date.now(),
+
+      sender: playerId
+
+    });
+
+
+    /* Check local solution */
+
+    if(isSolved()){
+
+      puzzleCompleted();
+
+    }
+
+  }
+
+}
+
+
+/* =========================
+   CHECK SOLUTION
+========================= */
+
+function isSolved(){
+
+  for(
+    let i = 0;
+    i < correctOrder.length;
+    i++
+  ){
+
+    if(
+      puzzleOrder[i] !==
+      correctOrder[i]
+    ){
+
       return false;
+
     }
 
   }
@@ -1769,34 +2066,115 @@ function isSolved(){
   return true;
 
 }
-      
-  function puzzleCompleted(){
-saveGameProgress(3);
-  document
-    .getElementById("successBox")
-    .style.display = "block";
 
-  document
-    .getElementById("nextLevelBtn")
-    .style.display = "block";
+
+/* =========================
+   PUZZLE COMPLETED
+========================= */
+
+function puzzleCompleted(){
+
+  saveGameProgress(3);
+
+  showPuzzleSuccess();
 
 }
 
 
-/* NEXT LEVEL */
+/* =========================
+   SHOW SUCCESS
+========================= */
+
+function showPuzzleSuccess(){
+
+  const successBox =
+    document.getElementById("successBox");
+
+  const nextButton =
+    document.getElementById("nextLevelBtn");
+
+
+  if(successBox){
+
+    successBox.style.display =
+      "block";
+
+  }
+
+
+  if(nextButton){
+
+    nextButton.style.display =
+      "block";
+
+  }
+
+}
+
+
+/* =========================
+   RECEIVE OTHER PLAYER MOVE
+========================= */
+
+onValue(
+  puzzleRef,
+  function(snapshot){
+
+    const data =
+      snapshot.val();
+
+    if(!data) return;
+
+    if(!Array.isArray(data.order))
+      return;
+
+
+    /* Ignore our own update */
+
+    if(data.sender === playerId)
+      return;
+
+
+    puzzleOrder =
+      data.order.slice();
+
+
+    selectedTile = null;
+
+
+    renderPuzzle();
+
+
+    /* Other player solved it */
+
+    if(isSolved()){
+
+      showPuzzleSuccess();
+
+    }
+
+  }
+);
+
+
+/* =========================
+   NEXT LEVEL
+========================= */
 
 function nextLevel(){
 
   document
     .getElementById("puzzleScreen")
-    .classList.remove("active");
+    .classList
+    .remove("active");
+
 
   document
     .getElementById("level3Screen")
-    .classList.add("active");
+    .classList
+    .add("active");
 
       }
-
 
 /* =========================
    LEVEL 3 - EMOJI MYSTERY
