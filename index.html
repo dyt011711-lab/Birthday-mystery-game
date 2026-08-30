@@ -2315,7 +2315,116 @@ if(!playerId){
   );
 
 }
+/* =========================
+   LIVE ANSWER TYPING
+========================= */
 
+const answerFields = [
+  "answer",
+  "level3Answer",
+  "level4Answer",
+  "level5Answer"
+];
+const typingPreview = {};
+
+answerFields.forEach(function(id){
+
+  const input = document.getElementById(id);
+
+  if(!input) return;
+
+  const preview = document.createElement("div");
+
+  preview.style.fontSize = "12px";
+  preview.style.color = "#888";
+  preview.style.marginTop = "6px";
+  preview.style.minHeight = "18px";
+
+  input.parentNode.insertBefore(
+    preview,
+    input.nextSibling
+  );
+
+  typingPreview[id] = preview;
+
+});
+const answerRefs = {};
+
+answerFields.forEach(function(id){
+
+  answerRefs[id] = ref(
+    database,
+    "rooms/" + SECRET_ROOM + "/typing/" + id
+  );
+
+});
+
+
+/* SEND TYPING */
+
+answerFields.forEach(function(id){
+
+  const input =
+    document.getElementById(id);
+
+  if(!input) return;
+
+
+  input.addEventListener("input", function(){
+
+    set(answerRefs[id], {
+
+      sender: playerId,
+
+      text: input.value
+
+    }).catch(function(error){
+
+      console.error(
+        "Typing sync error:",
+        error
+      );
+
+    });
+
+  });
+
+});
+
+
+/* RECEIVE TYPING */
+
+answerFields.forEach(function(id){
+
+  onValue(answerRefs[id], function(snapshot){
+
+    const data = snapshot.val();
+
+    if(!data) return;
+
+    if(data.sender === playerId) return;
+
+
+    const input =
+      document.getElementById(id);
+
+    if(!input) return;
+
+
+    /* Doosre player ka typed answer
+       sirf tab update karo jab input
+       currently focus mein na ho */
+
+    if(typingPreview[id]){
+
+  typingPreview[id].innerHTML =
+    "👀 Other player is typing: " +
+    (data.text || "");
+
+    }
+  });
+
+});
   /* =========================
    LIVE CHAT
 ========================= */
