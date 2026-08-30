@@ -2559,25 +2559,48 @@ window.toggleChat = function(){
   }
 
 };
-
 /* =========================
    SHARED GAME PROGRESS
+   FRESH SESSION SYSTEM
 ========================= */
+
+/*
+   Har browser/session ke liye naya session ID.
+   Purani Firebase progress ko next visit par
+   automatically use nahi kiya jayega.
+*/
+
+const sessionId =
+  "session_" +
+  Date.now() +
+  "_" +
+  Math.random()
+    .toString(36)
+    .substring(2,8);
+
+
+/* Current session ka progress */
 
 const progressRef = ref(
   database,
-  "rooms/" + SECRET_ROOM + "/progress"
+  "rooms/" +
+  SECRET_ROOM +
+  "/sessions/" +
+  sessionId +
+  "/progress"
 );
 
 
-/* Multiplayer sync variables */
+/* Multiplayer variables */
 
 let multiplayerReady = false;
 let lastSyncedStage = 0;
 let firstProgressLoad = true;
 
 
-/* Apni progress Firebase mein save karo */
+/* =========================
+   SAVE GAME PROGRESS
+========================= */
 
 window.saveGameProgress = async function(stage){
 
@@ -2586,7 +2609,9 @@ window.saveGameProgress = async function(stage){
     await set(progressRef, {
 
       stage: stage,
+
       updatedAt: Date.now(),
+
       sender: playerId
 
     });
@@ -2603,7 +2628,9 @@ window.saveGameProgress = async function(stage){
 };
 
 
-/* Doosre player ki progress sync */
+/* =========================
+   START PROGRESS SYNC
+========================= */
 
 window.startProgressSync = function(){
 
@@ -2614,44 +2641,51 @@ window.startProgressSync = function(){
 
   onValue(progressRef, function(snapshot){
 
-    const data = snapshot.val();
+    const data =
+      snapshot.val();
 
     if(!data) return;
 
 
-    const stage = data.stage || 0;
+    const stage =
+      Number(data.stage) || 0;
 
 
-    /* Pehli Firebase reading ko save karo,
-   lekin agar doosra player already game start kar chuka
-   ho to uski current progress bhi apply karo */
-
-if(firstProgressLoad){
-
-  firstProgressLoad = false;
-
-  if(data.sender === playerId){
-    lastSyncedStage = stage;
-    return;
-  }
-
-  lastSyncedStage = 0;
-
-}
-
-
-    /* Apni hi progress ko dobara run mat karo */
+    /*
+       Apni hi progress ko dobara
+       screen change nahi karna
+    */
 
     if(data.sender === playerId){
 
       lastSyncedStage = stage;
+
+      firstProgressLoad = false;
 
       return;
 
     }
 
 
-    /* Same ya purani progress ignore */
+    /*
+       Pehli reading:
+       current session mein agar doosra
+       player pehle se game chala chuka hai
+       to uski progress accept karo.
+    */
+
+    if(firstProgressLoad){
+
+      firstProgressLoad = false;
+
+      lastSyncedStage = stage;
+
+    }
+
+
+    /*
+       Same / old stage ignore
+    */
 
     if(stage <= lastSyncedStage) return;
 
@@ -2670,36 +2704,78 @@ if(firstProgressLoad){
 
     if(stage === 1){
 
-  const startScreen =
-    document.getElementById("startScreen");
+      const startScreen =
+        document.getElementById("startScreen");
 
-  const questionScreen =
-    document.getElementById("questionScreen");
+      const questionScreen =
+        document.getElementById("questionScreen");
 
-  if(startScreen){
-    startScreen.classList.remove("active");
-  }
 
-  if(questionScreen){
-    questionScreen.classList.add("active");
-  }
+      if(startScreen){
+
+        startScreen
+          .classList
+          .remove("active");
+
+      }
+
+
+      if(questionScreen){
+
+        questionScreen
+          .classList
+          .add("active");
+
+      }
 
     }
+
+
     /* =========================
        LEVEL 2
     ========================= */
 
     if(stage === 2){
 
-      document
-        .getElementById("questionScreen")
-        .classList.remove("active");
+      const questionScreen =
+        document.getElementById(
+          "questionScreen"
+        );
 
-      document
-        .getElementById("puzzleScreen")
-        .classList.add("active");
+      const puzzleScreen =
+        document.getElementById(
+          "puzzleScreen"
+        );
 
-      createPuzzle();
+
+      if(questionScreen){
+
+        questionScreen
+          .classList
+          .remove("active");
+
+      }
+
+
+      if(puzzleScreen){
+
+        puzzleScreen
+          .classList
+          .add("active");
+
+      }
+
+
+      /*
+         Existing puzzle system
+         ko hi use karo
+      */
+
+      if(typeof createPuzzle === "function"){
+
+        createPuzzle();
+
+      }
 
     }
 
@@ -2710,13 +2786,33 @@ if(firstProgressLoad){
 
     if(stage === 3){
 
-      document
-        .getElementById("puzzleScreen")
-        .classList.remove("active");
+      const puzzleScreen =
+        document.getElementById(
+          "puzzleScreen"
+        );
 
-      document
-        .getElementById("level3Screen")
-        .classList.add("active");
+      const level3Screen =
+        document.getElementById(
+          "level3Screen"
+        );
+
+
+      if(puzzleScreen){
+
+        puzzleScreen
+          .classList
+          .remove("active");
+
+      }
+
+
+      if(level3Screen){
+
+        level3Screen
+          .classList
+          .add("active");
+
+      }
 
     }
 
@@ -2727,13 +2823,33 @@ if(firstProgressLoad){
 
     if(stage === 4){
 
-      document
-        .getElementById("level3Screen")
-        .classList.remove("active");
+      const level3Screen =
+        document.getElementById(
+          "level3Screen"
+        );
 
-      document
-        .getElementById("level4Screen")
-        .classList.add("active");
+      const level4Screen =
+        document.getElementById(
+          "level4Screen"
+        );
+
+
+      if(level3Screen){
+
+        level3Screen
+          .classList
+          .remove("active");
+
+      }
+
+
+      if(level4Screen){
+
+        level4Screen
+          .classList
+          .add("active");
+
+      }
 
     }
 
@@ -2744,13 +2860,33 @@ if(firstProgressLoad){
 
     if(stage === 5){
 
-      document
-        .getElementById("level4Screen")
-        .classList.remove("active");
+      const level4Screen =
+        document.getElementById(
+          "level4Screen"
+        );
 
-      document
-        .getElementById("level5Screen")
-        .classList.add("active");
+      const level5Screen =
+        document.getElementById(
+          "level5Screen"
+        );
+
+
+      if(level4Screen){
+
+        level4Screen
+          .classList
+          .remove("active");
+
+      }
+
+
+      if(level5Screen){
+
+        level5Screen
+          .classList
+          .add("active");
+
+      }
 
     }
 
@@ -2761,13 +2897,33 @@ if(firstProgressLoad){
 
     if(stage === 6){
 
-      document
-        .getElementById("level5Screen")
-        .classList.remove("active");
+      const level5Screen =
+        document.getElementById(
+          "level5Screen"
+        );
 
-      document
-        .getElementById("finalCongratsScreen")
-        .classList.add("active");
+      const finalScreen =
+        document.getElementById(
+          "finalCongratsScreen"
+        );
+
+
+      if(level5Screen){
+
+        level5Screen
+          .classList
+          .remove("active");
+
+      }
+
+
+      if(finalScreen){
+
+        finalScreen
+          .classList
+          .add("active");
+
+      }
 
     }
 
@@ -2778,34 +2934,66 @@ if(firstProgressLoad){
 
     if(stage === 7){
 
-      document
-        .getElementById("countdownScreen")
-        .classList.remove("active");
+      const countdownScreen =
+        document.getElementById(
+          "countdownScreen"
+        );
 
-      document
-        .getElementById("birthdayScreen")
-        .classList.add("active");
+      const birthdayScreen =
+        document.getElementById(
+          "birthdayScreen"
+        );
+
+
+      if(countdownScreen){
+
+        countdownScreen
+          .classList
+          .remove("active");
+
+      }
+
+
+      if(birthdayScreen){
+
+        birthdayScreen
+          .classList
+          .add("active");
+
+      }
+
 
       const music =
-        document.getElementById("birthdayMusic");
+        document.getElementById(
+          "birthdayMusic"
+        );
+
 
       if(music){
 
         music.volume = 0.8;
+
         music.currentTime = 0;
 
-        music.play().catch(function(error){
+        music.play().catch(
+          function(error){
 
-          console.log(
-            "Music error:",
-            error
-          );
+            console.log(
+              "Music error:",
+              error
+            );
 
-        });
+          }
+        );
 
       }
 
-      startFlowers();
+
+      if(typeof startFlowers === "function"){
+
+        startFlowers();
+
+      }
 
     }
 
@@ -2816,70 +3004,110 @@ if(firstProgressLoad){
 
     if(stage === 8){
 
+      const birthdayScreen =
+        document.getElementById(
+          "birthdayScreen"
+        );
+
+      const loveScreen =
+        document.getElementById(
+          "loveScreen"
+        );
+
+
       const birthdayMusic =
-        document.getElementById("birthdayMusic");
+        document.getElementById(
+          "birthdayMusic"
+        );
+
 
       if(birthdayMusic){
 
         birthdayMusic.pause();
+
         birthdayMusic.currentTime = 0;
 
       }
 
 
-      document
-        .getElementById("birthdayScreen")
-        .classList.remove("active");
+      if(birthdayScreen){
+
+        birthdayScreen
+          .classList
+          .remove("active");
+
+      }
 
 
-      document
-        .getElementById("loveScreen")
-        .classList.add("active");
+      if(loveScreen){
+
+        loveScreen
+          .classList
+          .add("active");
+
+      }
 
 
       const sprinkleSound =
-        document.getElementById("sprinkleSound");
+        document.getElementById(
+          "sprinkleSound"
+        );
+
 
       if(sprinkleSound){
 
         sprinkleSound.volume = 0.35;
+
         sprinkleSound.currentTime = 0;
 
-        sprinkleSound.play().catch(function(error){
+        sprinkleSound.play().catch(
+          function(error){
 
-          console.log(
-            "Sprinkle sound error:",
-            error
-          );
+            console.log(
+              "Sprinkle sound error:",
+              error
+            );
 
-        });
+          }
+        );
 
       }
 
 
       const loveMusic =
-        document.getElementById("loveMusic");
+        document.getElementById(
+          "loveMusic"
+        );
+
 
       if(loveMusic){
 
         loveMusic.volume = 0.55;
+
         loveMusic.currentTime = 0;
 
-        loveMusic.play().catch(function(error){
+        loveMusic.play().catch(
+          function(error){
 
-          console.log(
-            "Love music error:",
-            error
-          );
+            console.log(
+              "Love music error:",
+              error
+            );
 
-        });
+          }
+        );
 
       }
 
-      setInterval(
-        createLoveText,
-        350
-      );
+
+      if(typeof createLoveText === "function"){
+
+        setInterval(
+          createLoveText,
+          350
+        );
+
+      }
 
     }
 
