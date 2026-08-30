@@ -1044,6 +1044,113 @@ opacity:1;
   font-size: 18px;
   cursor: pointer;
 }
+  /* =========================
+   LOVE SCREEN CHAT
+========================= */
+
+.loveChat{
+
+  position: absolute;
+
+  left: 50%;
+
+  bottom: 25px;
+
+  transform: translateX(-50%);
+
+  width: 90%;
+
+  max-width: 420px;
+
+  z-index: 20;
+
+}
+
+
+.loveChatTitle{
+
+  text-align: center;
+
+  color: #fff;
+
+  font-size: 14px;
+
+  margin-bottom: 8px;
+
+  text-shadow:
+    0 1px 5px rgba(0,0,0,0.4);
+
+}
+
+
+.loveChat .chatMessages{
+
+  height: 120px;
+
+  overflow-y: auto;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+
+  padding: 8px;
+
+  border-radius: 14px;
+
+  background: rgba(255,255,255,0.12);
+
+  backdrop-filter: blur(8px);
+
+}
+
+
+.loveChat .chatInputRow{
+
+  display: flex;
+
+  gap: 7px;
+
+  margin-top: 8px;
+
+}
+
+
+.loveChat #chatInput{
+
+  flex: 1;
+
+  min-width: 0;
+
+  padding: 10px 12px;
+
+  border: none;
+
+  outline: none;
+
+  border-radius: 20px;
+
+  font-size: 13px;
+
+}
+
+
+.loveChat button{
+
+  border: none;
+
+  padding: 0 14px;
+
+  border-radius: 20px;
+
+  cursor: pointer;
+
+  font-size: 12px;
+
+  font-weight: bold;
+
+}
 </style>
 </head>
 
@@ -1556,7 +1663,6 @@ ky ap mery sath ho or birthday celebrate kar rhi ho to or kya hosakta hai mery l
   ✨ Psst... Something Special For You 👀💌
 </div>
 
-
 <!-- LOVE SCREEN -->
 <div id="loveScreen" class="screen">
 
@@ -1571,6 +1677,43 @@ ky ap mery sath ho or birthday celebrate kar rhi ho to or kya hosakta hai mery l
     <p>♥ Forever & Always ♥</p>
 
   </div>
+
+
+  <!-- LOVE SCREEN CHAT -->
+
+  <div class="loveChat">
+
+    <div class="loveChatTitle">
+      💌 Our Little Chat
+    </div>
+
+    <div
+      id="chatMessages"
+      class="chatMessages"
+    ></div>
+
+    <div class="chatInputRow">
+
+      <input
+        type="text"
+        id="chatInput"
+        placeholder="Write something... ❤️"
+        autocomplete="off"
+      >
+
+      <button
+        type="button"
+        onclick="sendChatMessage()"
+      >
+        SEND 💕
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
 
 </div>
   <audio id="loveMusic" preload="auto" loop>
