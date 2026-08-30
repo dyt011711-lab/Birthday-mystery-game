@@ -2521,12 +2521,16 @@ if(firstProgressLoad){
 
   firstProgressLoad = false;
 
-  if(data.sender === playerId){
-    lastSyncedStage = stage;
-    return;
-  }
+  /*
+     Purani Firebase progress ko
+     first load par ignore karo.
+     Isse purana stage 8 direct
+     Love Screen nahi kholega.
+  */
 
-  lastSyncedStage = 0;
+  lastSyncedStage = stage;
+
+  return;
 
 }
 
