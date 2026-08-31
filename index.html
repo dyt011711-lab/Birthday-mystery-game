@@ -1784,7 +1784,62 @@ ky ap mery sath ho or birthday celebrate kar rhi ho to or kya hosakta hai mery l
     <div class="bottomHeart">
       ♥
     </div>
+<!-- VOICE NOTE -->
 
+<div class="voiceNoteCard">
+
+  <div class="voiceNoteTitle">
+    🎙️ Press Play, Eshu… Arif Has Something To Say 👀❤️
+  </div>
+
+  <div class="voiceNoteSub">
+    A little message, just for you 💌
+  </div>
+
+  <div class="voicePlayer">
+
+    <button
+      id="voicePlayBtn"
+      class="voicePlayBtn"
+      onclick="toggleVoiceNote()">
+      ▶
+    </button>
+
+    <div class="voicePlayerRight">
+
+      <div class="voiceWave">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="voiceTime">
+        <span id="voiceCurrentTime">0:00</span>
+        <span id="voiceDuration">0:00</span>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="voiceBottomText">
+    ♡ A little something from Arif ♡
+  </div>
+
+</div>
+
+<audio id="voiceNoteAudio" preload="metadata">
+  <source src="voice-note.mp3" type="audio/mpeg">
+</audio>
   </div>
 
 </div>
