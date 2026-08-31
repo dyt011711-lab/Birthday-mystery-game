@@ -669,14 +669,12 @@ opacity:1;
 
 
 /* =========================
-   LOVE SCREEN
+   NEW LOVE SCREEN
 ========================= */
 
 #loveScreen{
 
   background:#050005;
-
-  overflow:hidden;
 
   position:fixed;
 
@@ -684,36 +682,40 @@ opacity:1;
 
   z-index:10000;
 
+  overflow-y:auto;
+
+  overflow-x:hidden;
+
 }
 
 
 #loveScreen.active{
 
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
+  display:block;
 
 }
 
 
 #loveRain{
 
-  position:absolute;
+  position:fixed;
+
+  inset:0;
 
   width:100%;
-  height:100%;
 
-  top:0;
-  left:0;
+  height:100%;
 
   overflow:hidden;
 
   pointer-events:none;
 
+  z-index:1;
+
 }
 
+
+/* Falling love messages */
 
 .loveText{
 
@@ -728,7 +730,7 @@ opacity:1;
   font-family:serif;
 
   text-shadow:
-    0 0 8px rgba(255,70,160,0.8);
+    0 0 8px rgba(255,70,160,.8);
 
   animation:loveFall linear forwards;
 
@@ -739,7 +741,9 @@ opacity:1;
 
   0%{
 
-    transform:translateY(0) rotate(-8deg);
+    transform:
+      translateY(0)
+      rotate(-8deg);
 
     opacity:0;
 
@@ -753,7 +757,9 @@ opacity:1;
 
   100%{
 
-    transform:translateY(115vh) rotate(8deg);
+    transform:
+      translateY(115vh)
+      rotate(8deg);
 
     opacity:0;
 
@@ -762,60 +768,46 @@ opacity:1;
 }
 
 
+/* Main page */
 
-/* CENTER LOVE TEXT */
-
-.loveCenter{
+.lovePage{
 
   position:relative;
 
   z-index:2;
 
+  width:100%;
+
+  min-height:100vh;
+
+  box-sizing:border-box;
+
+  padding:
+    55px
+    14px
+    35px;
+
   text-align:center;
 
-  padding:20px;
-
 }
 
 
-.smallHeart{
+/* Big heart */
 
-  font-size:35px;
+.loveMainHeart{
 
-  margin-bottom:10px;
+  font-size:85px;
 
-  animation:heartBeat 1.2s ease-in-out infinite;
+  line-height:1;
 
-}
-
-
-.loveCenter h1{
-
-  margin:0;
-
-  font-family:cursive;
-
-  font-size:52px;
-
-  color:#ff5c9f;
+  color:#ff4f9a;
 
   text-shadow:
-    0 0 10px #ff5c9f,
+    0 0 10px #ff4f9a,
     0 0 25px #ff247c,
-    0 0 45px rgba(255,30,120,0.7);
+    0 0 45px rgba(255,30,120,.8);
 
-}
-
-
-.loveCenter p{
-
-  margin-top:18px;
-
-  font-size:22px;
-
-  color:#ffd1e3;
-
-  text-shadow:0 0 12px rgba(255,100,170,0.8);
+  animation:heartBeat 1.2s ease-in-out infinite;
 
 }
 
@@ -830,11 +822,194 @@ opacity:1;
 
   50%{
 
-    transform:scale(1.15);
+    transform:scale(1.12);
 
   }
 
-  }
+}
+
+
+/* I LOVE YOU */
+
+.loveCenter{
+
+  margin-top:5px;
+
+}
+
+
+.loveCenter h1{
+
+  margin:0;
+
+  font-family:cursive;
+
+  font-size:58px;
+
+  line-height:1.05;
+
+  color:#ff75ad;
+
+  text-shadow:
+    0 0 8px #ff5c9f,
+    0 0 20px #ff247c,
+    0 0 40px rgba(255,30,120,.75);
+
+}
+
+
+.loveCenter p{
+
+  margin-top:15px;
+
+  font-size:21px;
+
+  color:#ffd1e3;
+
+  text-shadow:
+    0 0 12px rgba(255,100,170,.8);
+
+}
+
+
+/* PHOTO HEADING */
+
+.photoHeading{
+
+  margin:
+    38px auto
+    22px;
+
+  padding:
+    13px
+    12px;
+
+  width:88%;
+
+  box-sizing:border-box;
+
+  border:
+    1px solid #ff5c9f;
+
+  border-radius:18px;
+
+  color:#ffd7e8;
+
+  font-family:cursive;
+
+  font-size:23px;
+
+  text-shadow:
+    0 0 8px #ff4f9a,
+    0 0 18px #ff247c;
+
+  box-shadow:
+    0 0 12px rgba(255,60,150,.7),
+    inset 0 0 15px rgba(255,60,150,.12);
+
+  background:
+    rgba(20,0,15,.55);
+
+}
+
+
+/* FOUR PHOTO GALLERY */
+
+.photoGallery{
+
+  width:96%;
+
+  max-width:500px;
+
+  margin:auto;
+
+  padding:12px;
+
+  box-sizing:border-box;
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:10px;
+
+  border:
+    1px solid rgba(255,80,160,.8);
+
+  border-radius:22px;
+
+  background:
+    rgba(20,0,15,.45);
+
+  box-shadow:
+    0 0 18px rgba(255,40,150,.6),
+    inset 0 0 20px rgba(255,40,150,.12);
+
+}
+
+
+/* Individual photo */
+
+.photoBox{
+
+  aspect-ratio:3 / 4;
+
+  overflow:hidden;
+
+  border:
+    2px solid #ff5c9f;
+
+  border-radius:15px;
+
+  background:#100008;
+
+  box-shadow:
+    0 0 10px rgba(255,50,150,.65);
+
+}
+
+
+.photoBox img{
+
+  width:100%;
+
+  height:100%;
+
+  display:block;
+
+  object-fit:cover;
+
+}
+
+
+/* Bottom decoration */
+
+.bottomHeart{
+
+  margin-top:25px;
+
+  padding-bottom:10px;
+
+  font-size:65px;
+
+  line-height:1;
+
+  color:#ff4f9a;
+
+  text-shadow:
+    0 0 10px #ff4f9a,
+    0 0 25px #ff247c,
+    0 0 45px rgba(255,30,120,.7);
+
+  animation:heartBeat 1.5s ease-in-out infinite;
+
+}
+
+
+  
+
+  
   /* =========================
    MULTIPLAYER ROOM SCREEN
 ========================= */
@@ -1562,15 +1737,57 @@ ky ap mery sath ho or birthday celebrate kar rhi ho to or kya hosakta hai mery l
 
   <div id="loveRain"></div>
 
-  <div class="loveCenter">
+  <div class="lovePage">
 
-    <div class="smallHeart">❤️</div>
+    <!-- TOP HEART -->
+    <div class="loveMainHeart">♡</div>
 
-    <h1>I Love You</h1>
+    <!-- MAIN MESSAGE -->
+    <div class="loveCenter">
 
-    <p>♥ Forever & Always ♥</p>
+      <h1>I Love You</h1>
+
+      <p>♥ Forever & Always ♥</p>
+
+    </div>
+
+
+    <!-- PHOTO HEADING -->
+    <div class="photoHeading">
+      pics to dekhu bhondu 😘😇
+    </div>
+
+
+    <!-- FOUR PHOTOS -->
+    <div class="photoGallery">
+
+      <div class="photoBox">
+        <img src="pic1.jpg" alt="Memory 1">
+      </div>
+
+      <div class="photoBox">
+        <img src="pic2.jpg" alt="Memory 2">
+      </div>
+
+      <div class="photoBox">
+        <img src="pic3.jpg" alt="Memory 3">
+      </div>
+
+      <div class="photoBox">
+        <img src="pic4.jpg" alt="Memory 4">
+      </div>
+
+    </div>
+
+
+    <!-- BOTTOM HEART -->
+    <div class="bottomHeart">
+      ♥
+    </div>
 
   </div>
+
+</div>
 
 </div>
   <audio id="loveMusic" preload="auto" loop>
