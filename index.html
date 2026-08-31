@@ -2822,7 +2822,203 @@ function createLoveText(){
   },7000);
 
 }
+/* =========================
+   LOVE SCREEN VOICE NOTE
+========================= */
 
+const voiceAudio =
+  document.getElementById("voiceNoteAudio");
+
+const voicePlayBtn =
+  document.getElementById("voicePlayBtn");
+
+const voiceCurrentTime =
+  document.getElementById("voiceCurrentTime");
+
+const voiceDuration =
+  document.getElementById("voiceDuration");
+
+
+/* Format time */
+
+function formatVoiceTime(seconds){
+
+  if(!isFinite(seconds)){
+    return "0:00";
+  }
+
+  const minutes =
+    Math.floor(seconds / 60);
+
+  const remainingSeconds =
+    Math.floor(seconds % 60);
+
+  return (
+    minutes +
+    ":" +
+    remainingSeconds
+      .toString()
+      .padStart(2,"0")
+  );
+
+}
+
+
+/* PLAY / PAUSE */
+
+window.toggleVoiceNote = function(){
+
+  if(!voiceAudio) return;
+
+
+  if(voiceAudio.paused){
+
+    /* Background music low */
+
+    const birthdayMusic =
+      document.getElementById("birthdayMusic");
+
+    const loveMusic =
+      document.getElementById("loveMusic");
+
+
+    if(birthdayMusic){
+      birthdayMusic.volume = 0.12;
+    }
+
+    if(loveMusic){
+      loveMusic.volume = 0.15;
+    }
+
+
+    voiceAudio.play().catch(function(error){
+
+      console.log(
+        "Voice note error:",
+        error
+      );
+
+    });
+
+  }else{
+
+    voiceAudio.pause();
+
+  }
+
+};
+
+
+/* Duration loaded */
+
+if(voiceAudio){
+
+  voiceAudio.addEventListener(
+    "loadedmetadata",
+    function(){
+
+      if(voiceDuration){
+
+        voiceDuration.textContent =
+          formatVoiceTime(
+            voiceAudio.duration
+          );
+
+      }
+
+    }
+  );
+
+
+  /* Current time */
+
+  voiceAudio.addEventListener(
+    "timeupdate",
+    function(){
+
+      if(voiceCurrentTime){
+
+        voiceCurrentTime.textContent =
+          formatVoiceTime(
+            voiceAudio.currentTime
+          );
+
+      }
+
+    }
+  );
+
+
+  /* Playing */
+
+  voiceAudio.addEventListener(
+    "play",
+    function(){
+
+      if(voicePlayBtn){
+
+        voicePlayBtn.textContent = "❚❚";
+
+      }
+
+    }
+  );
+
+
+  /* Paused */
+
+  voiceAudio.addEventListener(
+    "pause",
+    function(){
+
+      if(voicePlayBtn){
+
+        voicePlayBtn.textContent = "▶";
+
+      }
+
+    }
+  );
+
+
+  /* Voice finished */
+
+  voiceAudio.addEventListener(
+    "ended",
+    function(){
+
+      if(voicePlayBtn){
+
+        voicePlayBtn.textContent = "▶";
+
+      }
+
+
+      /* Background music normal */
+
+      const birthdayMusic =
+        document.getElementById("birthdayMusic");
+
+      const loveMusic =
+        document.getElementById("loveMusic");
+
+
+      if(birthdayMusic){
+
+        birthdayMusic.volume = 0.8;
+
+      }
+
+      if(loveMusic){
+
+        loveMusic.volume = 0.55;
+
+      }
+
+    }
+  );
+
+}
 </script>
 
 <script type="module">
