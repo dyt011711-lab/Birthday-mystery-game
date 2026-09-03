@@ -2010,7 +2010,69 @@ ky ap mery sath ho or birthday celebrate kar rhi ho to or kya hosakta hai mery l
 <div id="loveScreen" class="screen">
 
   <div id="loveRain"></div>
+<!-- LOVE SCREEN CHAT -->
 
+<button
+  id="loveChatToggle"
+  class="chat-toggle"
+  onclick="toggleLoveChat()"
+  style="z-index:10002;">
+  💬
+</button>
+
+<div
+  id="loveMultiplayerPanel"
+  class="multiplayer-panel chat-closed">
+
+  <div class="chat-header">
+    <span>💬 Team Chat</span>
+
+    <button
+      class="chat-close"
+      onclick="toggleLoveChat()">
+      ✕
+    </button>
+  </div>
+
+  <div class="players-status">
+    <span class="online-dot"></span>
+
+    <span id="lovePlayersStatus">
+      Waiting for partner...
+    </span>
+  </div>
+
+  <div id="lovePlayersList" class="players-list">
+    👤 You
+  </div>
+
+  <div id="loveChatMessages" class="chat-messages">
+
+    <div class="system-message">
+      ✨ Chat is ready...
+    </div>
+
+  </div>
+
+  <div class="chat-input-box">
+
+    <input
+      type="text"
+      id="loveChatInput"
+      placeholder="Type something..."
+      autocomplete="off"
+      style="flex:1;min-width:0;border:none;outline:none;padding:11px;font-size:14px;"
+    >
+
+    <button
+      class="chat-send-btn"
+      onclick="sendLoveChatMessage()">
+      ➤
+    </button>
+
+  </div>
+
+</div>
   <div class="lovePage">
 
     <!-- TOP HEART -->
@@ -3314,7 +3376,37 @@ window.sendChatMessage = async function(){
   }
 
 };
+window.sendLoveChatMessage = async function(){
 
+  const input =
+    document.getElementById("loveChatInput");
+
+  const text =
+    input.value.trim();
+
+  if(!text) return;
+
+  try{
+
+    await push(chatRef, {
+      sender: playerId,
+      message: text,
+      time: Date.now(),
+      session: "current"
+    });
+
+    input.value = "";
+
+  }catch(error){
+
+    console.error(
+      "Love Chat error:",
+      error
+    );
+
+  }
+
+};
 
 /* RECEIVE ONLY NEW MESSAGES */
 
@@ -3399,7 +3491,29 @@ window.toggleChat = function(){
   }
 
 };
+window.toggleLoveChat = function(){
 
+  const panel =
+    document.getElementById("loveMultiplayerPanel");
+
+  const button =
+    document.getElementById("loveChatToggle");
+
+  if(!panel || !button) return;
+
+  if(panel.classList.contains("chat-closed")){
+
+    panel.classList.remove("chat-closed");
+    button.style.display = "none";
+
+  }else{
+
+    panel.classList.add("chat-closed");
+    button.style.display = "block";
+
+  }
+
+};
 /* =========================
    SHARED GAME PROGRESS
 ========================= */
