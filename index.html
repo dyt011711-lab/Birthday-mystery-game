@@ -3407,7 +3407,6 @@ window.sendLoveChatMessage = async function(){
   }
 
 };
-
 /* RECEIVE ONLY NEW MESSAGES */
 
 onChildAdded(chatRef, function(snapshot){
@@ -3417,50 +3416,107 @@ onChildAdded(chatRef, function(snapshot){
 
   if(!data) return;
 
+  /* Ignore old messages */
+
+  if(!data.session) return;
+
+
+  /* =========================
+     ORIGINAL CHAT
+  ========================= */
 
   const messages =
     document.getElementById("chatMessages");
 
-  if(!messages) return;
+
+  /* =========================
+     LOVE SCREEN CHAT
+  ========================= */
+
+  const loveMessages =
+    document.getElementById("loveChatMessages");
 
 
-  /* Ignore old messages */
+  /* Create message for original chat */
 
-  
-if(!data.session) return;
-  const messageBox =
-    document.createElement("div");
+  if(messages){
+
+    const messageBox =
+      document.createElement("div");
+
+    messageBox.style.padding = "7px 10px";
+    messageBox.style.borderRadius = "10px";
+    messageBox.style.fontSize = "13px";
 
 
-  messageBox.style.padding = "7px 10px";
-  messageBox.style.borderRadius = "10px";
-  messageBox.style.fontSize = "13px";
+    if(data.sender === playerId){
+
+      messageBox.style.alignSelf = "flex-end";
+      messageBox.style.background = "#222";
+      messageBox.style.color = "white";
+
+    }else{
+
+      messageBox.style.alignSelf = "flex-start";
+      messageBox.style.background = "#eeeeee";
+      messageBox.style.color = "#222";
+
+    }
 
 
-  if(data.sender === playerId){
+    messageBox.innerHTML =
+      data.message;
 
-    messageBox.style.alignSelf = "flex-end";
-    messageBox.style.background = "#222";
-    messageBox.style.color = "white";
 
-  }else{
+    messages.appendChild(messageBox);
 
-    messageBox.style.alignSelf = "flex-start";
-    messageBox.style.background = "#eeeeee";
-    messageBox.style.color = "#222";
+
+    messages.scrollTop =
+      messages.scrollHeight;
 
   }
 
 
-  messageBox.innerHTML =
-    data.message;
+  /* Create same message for Love Screen chat */
+
+  if(loveMessages){
+
+    const loveMessageBox =
+      document.createElement("div");
+
+    loveMessageBox.style.padding = "7px 10px";
+    loveMessageBox.style.borderRadius = "10px";
+    loveMessageBox.style.fontSize = "13px";
 
 
-  messages.appendChild(messageBox);
+    if(data.sender === playerId){
+
+      loveMessageBox.style.alignSelf = "flex-end";
+      loveMessageBox.style.background = "#222";
+      loveMessageBox.style.color = "white";
+
+    }else{
+
+      loveMessageBox.style.alignSelf = "flex-start";
+      loveMessageBox.style.background = "#eeeeee";
+      loveMessageBox.style.color = "#222";
+
+    }
 
 
-  messages.scrollTop =
-    messages.scrollHeight;
+    loveMessageBox.innerHTML =
+      data.message;
+
+
+    loveMessages.appendChild(
+      loveMessageBox
+    );
+
+
+    loveMessages.scrollTop =
+      loveMessages.scrollHeight;
+
+  }
 
 });
   /* =========================
