@@ -2236,11 +2236,17 @@ function checkAnswer(){
     .trim()
     .toLowerCase();
 
-  const correctAnswer = "eshal noor";
+  const correctAnswers = [
+  "eshal noor",
+  "eshu",
+  "eshal",
+  "janaww",
+  "moti"
+];
 
   const message = document.getElementById("message");
 
-  if(answer === correctAnswer){
+  if(correctAnswers.includes(answer)){
 saveGameProgress(2);
     message.innerHTML =
       "✨ Bilkul sahi! Ab agla raaz tumhara intezar kar raha hai...";
